@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="267.82" height="66.341" viewBox="0 0 267.82 66.341">
+  <g id="Group_97" data-name="Group 97" transform="translate(-46.09 -629.748)">
+    <path id="Path_1" data-name="Path 1" d="M1270.807,1100.336c14.158.579,238.885,3.129,238.885,3.129s14.736,2.55,12.469,16.437a362.221,362.221,0,0,1-9.068,38.541c-1.321,3.79-1.134,8.218-17.287,8.218H1290.349s-9.919-1.7-16.153-14.453-12.186-19.27-17.57-28.339S1256.649,1099.757,1270.807,1100.336Z" transform="translate(-1208.488 -470.572)" fill="#fff"/>
+    <text id="إبدأ_الإستخدام" data-name="إبدأ الإستخدام" transform="translate(175 670)" fill="#4d68d4" font-size="20" font-family="Cairo-SemiBold, Cairo" font-weight="600"><tspan x="0" y="0">إبدأ الإستخدام</tspan></text>
+    <g id="Group_1" data-name="Group 1" transform="translate(0 8)">
+      <circle id="Ellipse_1" data-name="Ellipse 1" cx="10" cy="10" r="10" transform="translate(84 647)" fill="#4d68d4"/>
+      <path id="Polygon_1" data-name="Polygon 1" d="M3.168,1.248a1,1,0,0,1,1.664,0l2.131,3.2A1,1,0,0,1,6.131,6H1.869a1,1,0,0,1-.832-1.555Z" transform="translate(90 661) rotate(-90)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
