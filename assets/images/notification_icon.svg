@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27" height="26.561" viewBox="0 0 27 26.561">
+  <g id="Group_136" data-name="Group 136" transform="translate(-296 -31.939)">
+    <rect id="Rectangle_115" data-name="Rectangle 115" width="27" height="26.561" rx="5" transform="translate(296 31.939)" fill="#121213" opacity="0.04"/>
+    <g id="Icon_ionic-ios-notifications" data-name="Icon ionic-ios-notifications" transform="translate(297.239 34.41)">
+      <path id="Path_81" data-name="Path 81" d="M16.474,30.392a1.829,1.829,0,0,0,1.866-2.056H14.6A1.83,1.83,0,0,0,16.474,30.392Z" transform="translate(-4.219 -12.704)" fill="#398ce0"/>
+      <path id="Path_82" data-name="Path 82" d="M17.622,13.832c-.53-.678-1.571-1.076-1.571-4.114,0-3.118-1.417-4.371-2.737-4.672-.124-.03-.213-.07-.213-.2v-.1a.839.839,0,0,0-1.678,0v.1c0,.124-.089.167-.213.2-1.324.3-2.737,1.554-2.737,4.672,0,3.038-1.042,3.432-1.571,4.114a.662.662,0,0,0,.547,1.063h9.632A.662.662,0,0,0,17.622,13.832Z" transform="translate(0 0)" fill="#398ce0"/>
+    </g>
+    <g id="Ellipse_38" data-name="Ellipse 38" transform="translate(310 37)" fill="#ff3c4a" stroke="#f5f5f5" stroke-width="0.5">
+      <circle cx="3" cy="3" r="3" stroke="none"/>
+      <circle cx="3" cy="3" r="2.75" fill="none"/>
+    </g>
+  </g>
+</svg>
