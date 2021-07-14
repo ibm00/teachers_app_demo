@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:teachers_app/screens/auth/welcom_screen.dart';
-import 'package:teachers_app/screens/home/profile/profile_screen.dart';
-import 'package:teachers_app/screens/home/qr_scan_page.dart';
-
+import '../auth/welcom_screen.dart';
+import 'profile/profile_screen.dart';
+import '../quiz/1-quiz_home/quiz_home.dart';
 import 'news_part.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,7 +42,10 @@ class HomeScreen extends StatelessWidget {
               width: w * 0.7,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => QuizHomeScreen()));
+              },
               child: SvgPicture.asset(
                 'assets/images/quizes_home_screen_card.svg',
                 width: w * 0.95,
