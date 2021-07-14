@@ -70,8 +70,8 @@ class HomeScreen extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () async {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => QrCodeScanScreen()));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (_) => QrCodeScanScreen()));
             },
             child: SvgPicture.asset(
               'assets/images/barcode_icon.svg',
