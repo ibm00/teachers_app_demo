@@ -10,7 +10,6 @@ class NewsPartScreen extends StatefulWidget {
 class _NewsPartScreenState extends State<NewsPartScreen> {
   late PageController controller;
 
-
   GlobalKey<PageContainerState> key = GlobalKey();
 
   @override
@@ -36,7 +35,7 @@ class _NewsPartScreenState extends State<NewsPartScreen> {
         color: const Color(0xFF398CE0),
         height: w > 600 || or == Orientation.landscape
             ? w * 0.45
-            : (h < 735 ? h * 0.23 + 30 : h * 0.23),
+            : (h < 735 ? h * 0.23 + 30 : h * 0.25),
         width: w * 0.85,
         child: LayoutBuilder(builder: (_, constrains) {
           double _maxH = constrains.maxHeight;

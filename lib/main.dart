@@ -1,16 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/screens/home/profile/profile_screen.dart';
 import 'screens/auth/register_screen/register_screen.dart';
 import 'screens/auth/welcom_screen.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/quiz/quiz_home/quiz_home.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => MyApp(), // Wrap your app
+        enabled: false,
+        builder: (context) => ProviderScope(child: MyApp()), // Wrap your app
       ),
     );
-// void main() => runApp(MyApp());
+// void main() => ProviderScope(child: MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => RegisterScreen(),
+        '/': (_) => QuizHomeScreen(),
       },
     );
   }

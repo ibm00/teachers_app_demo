@@ -32,6 +32,9 @@ dependencies:
   device_preview: ^0.7.4
   page_indicator: ^0.4.1
   qr_code_scanner: ^0.5.1
+  page_transition: ^2.0.2
+  fluttertoast: ^8.0.7
+  flutter_riverpod: ^0.14.0+3
   
 dev_dependencies:
   lint: ^1.5.3

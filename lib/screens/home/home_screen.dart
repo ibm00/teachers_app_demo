@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:teachers_app/screens/auth/welcom_screen.dart';
+import 'package:teachers_app/screens/home/profile/profile_screen.dart';
 import 'package:teachers_app/screens/home/qr_scan_page.dart';
-
 
 import 'news_part.dart';
 
@@ -77,9 +79,19 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          SvgPicture.asset(
-            'assets/images/menu_icon.svg',
-            width: w * 0.1,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.topToBottom,
+                      curve: Curves.bounceIn,
+                      child: ProfileScreen()));
+            },
+            child: SvgPicture.asset(
+              'assets/images/menu_icon.svg',
+              width: w * 0.1,
+            ),
           ),
           const Spacer(),
           SvgPicture.asset(
