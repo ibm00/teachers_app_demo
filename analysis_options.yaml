@@ -1,1 +1,4 @@
 include: package:lint/analysis_options.yaml
+linter:
+  rules:
+    file_names: false

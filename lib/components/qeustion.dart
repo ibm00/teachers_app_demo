@@ -60,17 +60,18 @@ class _QuestionComponentState extends State<QuestionComponent> {
               ),
             ),
             FlutterRadioGroup(
-                titles: widget.questionAnswers,
-                labelVisible: false,
-                activeColor: Colors.blue,
-                titleStyle: TextStyle(
-                    fontSize: w > 600 || or == Orientation.landscape ? 25 : 16),
-                defaultSelected: widget.studentAnswers[widget.questionIndex],
-                onChanged: (index) {
-                  setState(() {
-                    widget.studentAnswers[widget.questionIndex] = index;
-                  });
-                }),
+              titles: widget.questionAnswers,
+              labelVisible: false,
+              activeColor: Colors.blue,
+              titleStyle: TextStyle(
+                  fontSize: w > 600 || or == Orientation.landscape ? 25 : 16),
+              defaultSelected: widget.studentAnswers[widget.questionIndex],
+              onChanged: (index) {
+                setState(() {
+                  widget.studentAnswers[widget.questionIndex] = index;
+                });
+              },
+            ),
           ],
         ),
       ),
