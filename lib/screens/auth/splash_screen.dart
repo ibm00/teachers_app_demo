@@ -16,7 +16,7 @@ class RootWidget extends StatelessWidget {
       onChange: (context, loading) {
         // trigger loading from any where in the project
         //just from any where call context.read(loadingProvider).state = true ;
-
+        // and for sure don't forget to make it false to stop it
         if (loading.state) {
           LoadingWidgets.getDialogLoading(context);
         } else {

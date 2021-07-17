@@ -6,6 +6,7 @@ final userDataProvider =
 
 class _UserDataProvider extends ChangeNotifier {
   String token = '4282975c1edfe8c51d44dbc3db1bd95c17fe4b02';
+  bool isStudent = true;
   String userName = 'ahmed123';
   String fullName = 'احمد فرج السكري';
   String password1 = '';
