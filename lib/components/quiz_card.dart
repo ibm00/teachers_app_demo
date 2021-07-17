@@ -66,24 +66,27 @@ class QuizCardComponent extends StatelessWidget {
                         ],
                       ),
                       // End of PlaceHolder
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            examName,
-                            style: TextStyle(
-                              fontSize: newW * 0.08,
+                      Expanded(
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: ListTile(
+                            title: Text(
+                              examName,
+                              style: TextStyle(
+                                fontSize: newW * 0.06,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            subtitle: Text(
+                              time,
+                              style: TextStyle(
+                                  fontSize: newW * 0.03, color: Colors.grey),
+                            ),
                           ),
-                          Text(
-                            time,
-                            style: TextStyle(
-                                fontSize: newW * 0.03, color: Colors.grey),
-                          )
-                        ],
+                        ),
                       ),
+
                       SvgPicture.asset(
                         'assets/images/quiz_icon.svg',
                         width: newW * 0.25,

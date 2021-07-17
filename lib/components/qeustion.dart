@@ -52,11 +52,14 @@ class _QuestionComponentState extends State<QuestionComponent> {
                   fontSize: w > 600 || or == Orientation.landscape ? 30 : 19),
             ),
             const SizedBox(height: 10),
-            SizedBox(
-              width: w * 0.9,
-              child: Image.network(
-                widget.image,
-                fit: BoxFit.contain,
+            Visibility(
+              visible: widget.image.isNotEmpty,
+              child: SizedBox(
+                width: w * 0.9,
+                child: Image.network(
+                  widget.image,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             FlutterRadioGroup(

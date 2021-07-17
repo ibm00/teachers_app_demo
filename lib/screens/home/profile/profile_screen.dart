@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:teachers_app/providers/loading_provider.dart';
+import 'package:teachers_app/providers/user_data_provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
+    final userData = watch(userDataProvider);
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     Orientation or = MediaQuery.of(context).orientation;
@@ -38,11 +42,18 @@ class ProfileScreen extends StatelessWidget {
               width: w * 0.33,
             ),
             Text(
-              'عبعال السيد عبعال',
+              userData.fullName,
               style: TextStyle(fontSize: w * 0.055, color: Colors.white),
             ),
             Text(
-              'abdelaal203',
+              userData.userName,
+              style: TextStyle(
+                fontSize: w * 0.05,
+                color: Colors.white.withAlpha(180),
+              ),
+            ),
+            Text(
+              userData.groupName,
               style: TextStyle(
                 fontSize: w * 0.05,
                 color: Colors.white.withAlpha(180),
@@ -55,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '568782412464222',
+                  userData.fatherCode,
                   style: TextStyle(
                     fontSize: w * 0.04,
                     color: Colors.white.withAlpha(180),
@@ -70,7 +81,8 @@ class ProfileScreen extends StatelessWidget {
                   child: Center(
                     child: IconButton(
                         onPressed: () {
-                          Clipboard.setData(ClipboardData(text: "your text"));
+                          Clipboard.setData(
+                              ClipboardData(text: userData.fatherCode));
                           Fluttertoast.showToast(
                               msg: "تم النسخ",
                               toastLength: Toast.LENGTH_SHORT,
@@ -111,7 +123,9 @@ class ProfileScreen extends StatelessWidget {
             _buildOptionsItem(
                 context: context,
                 text: 'الخصوصية',
-                callback: () {},
+                callback: () {
+                  context.read(loadingProvider).state = true;
+                },
                 iconData: Icons.privacy_tip),
             _buildOptionsItem(
                 context: context,
