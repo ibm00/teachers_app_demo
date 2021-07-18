@@ -8,26 +8,27 @@ class AuthAPI {
   static Future<String?> loginMe({
     String? userName,
     String? password,
-    String? mobileId = "123",
   }) async {
     final String mobileInfo = await DeviceInfoService.getMobileId();
     final Uri url = Uri.parse("$APP_API/rest-auth/login/");
-    final res = await http.post(
-      url,
-      body: json.encode(
-        {
-          "username": userName,
-          "password": password,
-          "mobile_id": "$mobileInfo/$userName",
-        },
-      ),
-    );
+    final res = await http.post(url,
+        body: json.encode(
+          {
+            "username": userName,
+            "password": password,
+            "mobile_id": "2651",
+          },
+        ),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+        });
     if (res.statusCode == 200) {
-      final token = json.decode(res.body) as Map<String?, String?>;
+      final token = json.decode(res.body) as Map;
+      final sToken = token["key"] as String;
       print(token);
-      return token["key"];
+      return sToken;
     } else {
-      throw Exception();
+      print(json.decode(res.body));
     }
   }
 
@@ -36,7 +37,7 @@ class AuthAPI {
     String? name,
     String? password1,
     String? password2,
-    String? year,
+    int? year,
     String? phoneNumber,
     String? fatherPhone,
   }) async {
@@ -56,14 +57,18 @@ class AuthAPI {
           "mobile_id": "$mobileInfo/$userName",
         },
       ),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+      },
     );
     if (res.statusCode == 200) {
-      final Map<String, String> dataMap =
-          json.decode(res.body) as Map<String, String>;
+      final Map dataMap = json.decode(res.body) as Map;
       print(json.decode(res.body));
-      return dataMap;
+      return {};
     } else {
-      throw Exception();
+      print(res.statusCode);
+      print(json.decode(res.body));
+      return {};
     }
   }
 }

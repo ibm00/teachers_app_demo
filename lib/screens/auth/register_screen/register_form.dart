@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teachers_app/api/auth_api.dart';
 
 import '../../../helpers/validators.dart';
 import '../../../widgets/text_form_field.dart';
@@ -17,7 +18,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   String userName = "";
   String name = "";
-  Years? year = Years.one;
+  int? year = 1;
   String phone = "";
   String dadPhone = "";
   String pass = "";
@@ -27,7 +28,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passController = TextEditingController();
   bool _passVisiblity = false;
   bool _rePassVisiblity = false;
-  Years? studentYear = Years.one;
+  int? studentYear = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -113,19 +114,19 @@ class _RegisterFormState extends State<RegisterForm> {
                             value: studentYear,
                             items: const [
                               DropdownMenuItem(
-                                value: Years.one,
-                                child: Text("الأولى"),
+                                value: 1,
+                                child: Text("الصف الأول الثانوي"),
                               ),
                               DropdownMenuItem(
-                                value: Years.two,
-                                child: Text("الثانية"),
+                                value: 2,
+                                child: Text("الصف الثاني الثانوي"),
                               ),
                               DropdownMenuItem(
-                                value: Years.three,
-                                child: Text("الثالثة"),
+                                value: 3,
+                                child: Text("الصف الثالث الثانوي"),
                               ),
                             ],
-                            onChanged: (Years? v) {
+                            onChanged: (int? v) {
                               setState(() {
                                 studentYear = v;
                                 year = v;
@@ -279,6 +280,15 @@ class _RegisterFormState extends State<RegisterForm> {
               onPressed: () {
                 if (!_formKey.currentState!.validate()) return;
                 _formKey.currentState!.save();
+                AuthAPI.registerMe(
+                  userName: userName,
+                  name: name,
+                  fatherPhone: dadPhone,
+                  password1: pass,
+                  password2: rePass,
+                  phoneNumber: phone,
+                  year: year,
+                );
                 print(userName);
                 print(name);
                 print(year);
