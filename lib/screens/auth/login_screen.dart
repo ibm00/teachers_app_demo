@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:teachers_app/api/auth_api.dart';
 import '../../helpers/validators.dart';
 import '../../widgets/text_form_field.dart';
 
@@ -35,10 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
       const Color(0xFFC0C0C0),
     ),
   );
+  bool _passVisiblity = false;
+  String userName = "";
+  String _pass = "";
   @override
   Widget build(BuildContext context) {
-    String _phone = "";
-    String _pass = "";
     final mediaQuery = MediaQuery.of(context).size;
     final orn = MediaQuery.of(context).orientation;
     final _phoneHeight =
@@ -161,20 +163,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  "رقم الهاتف",
+                                  "اسم المستخدم",
                                   style: _resTextStyle14,
                                 ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 6),
                                   child: MyTextFormField(
+                                    textFieldIcon:
+                                        const Icon(Icons.account_circle),
                                     phoneH: _phoneHeight,
                                     mediaQuery: mediaQuery,
                                     onSaveData: (v) {
-                                      _phone = v!;
+                                      userName = v!;
                                     },
                                     validatorFun: (v) =>
-                                        ValidatorHelper.phoneNumValidator(v!),
+                                        ValidatorHelper.userNameValidator(v!),
                                   ),
                                 ),
                               ],
@@ -193,6 +197,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 6),
                                 child: MyTextFormField(
+                                  mySuffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _passVisiblity = !_passVisiblity;
+                                      });
+                                    },
+                                    icon: _passVisiblity
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
+                                  ),
+                                  textFieldIcon: const Icon(Icons.lock),
+                                  passField: !_passVisiblity,
                                   phoneH: _phoneHeight,
                                   mediaQuery: mediaQuery,
                                   onSaveData: (v) {
@@ -220,7 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         if (!_formKey.currentState!.validate()) return;
                         _formKey.currentState!.save();
-                        print(_phone);
+                        AuthAPI.loginMe(password: "1", userName: userName);
+                        print(userName);
                         print(_pass);
                       },
                       style: ButtonStyle(

@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
+import '../../../providers/loading_provider.dart';
+import '../../../providers/user_data_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
   @override

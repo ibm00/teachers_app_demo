@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/constants.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:teachers_app/providers/start_app_logic_provider.dart';
-import 'package:teachers_app/screens/auth/welcom_screen.dart';
-import 'package:teachers_app/screens/home/home_screen.dart';
-import 'package:teachers_app/widgets/dialogs/quiz_buttons_dialogs.dart';
-import 'package:teachers_app/widgets/loading.dart';
+import '../../constants.dart';
+import '../../providers/loading_provider.dart';
+import '../../providers/start_app_logic_provider.dart';
+import 'welcom_screen.dart';
+import '../home/home_screen.dart';
+import '../../widgets/dialogs/quiz_buttons_dialogs.dart';
+import '../../widgets/loading.dart';
 
 class RootWidget extends StatelessWidget {
   @override
@@ -56,8 +56,6 @@ class RootWidget extends StatelessWidget {
 }
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

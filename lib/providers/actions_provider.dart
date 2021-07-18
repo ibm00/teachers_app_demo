@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teachers_app/models/actions.dart';
+import '../models/actions.dart';
 
 class ActionsProvider extends ChangeNotifier {
   List<ActionModel> actions = [];

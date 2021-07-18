@@ -1,12 +1,14 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:teachers_app/screens/auth/login_screen.dart';
-import 'package:teachers_app/screens/auth/splash_screen.dart';
-import 'package:teachers_app/screens/home/home_screen.dart';
-import 'package:teachers_app/screens/quiz/1-quiz_home/quiz_home.dart';
-import 'package:teachers_app/widgets/dialogs/quiz_buttons_dialogs.dart';
+import 'package:teachers_app/screens/auth/welcom_screen.dart';
+import 'providers/loading_provider.dart';
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen/register_screen.dart';
+import 'screens/auth/splash_screen.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/quiz/1-quiz_home/quiz_home.dart';
+import 'widgets/dialogs/quiz_buttons_dialogs.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'screens/home/profile/profile_screen.dart';
 import 'screens/quiz/take_quiz.dart';
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => RootWidget(),
+        '/': (_) => RegisterScreen(),
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:teachers_app/widgets/loading.dart';
+import '../../widgets/loading.dart';
 import '../auth/welcom_screen.dart';
 import 'profile/profile_screen.dart';
 import '../quiz/1-quiz_home/quiz_home.dart';

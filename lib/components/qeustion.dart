@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:teachers_app/widgets/radio_group.dart';
+import '../widgets/radio_group.dart';
 
 class QuestionComponent extends StatefulWidget {
   final List<String> questionAnswers;

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'package:teachers_app/components/qeustion.dart';
-import 'package:teachers_app/helpers/quiz.dart';
-import 'package:teachers_app/models/quiz_models.dart';
-import 'package:teachers_app/widgets/dialogs/quiz_buttons_dialogs.dart';
-import 'package:teachers_app/widgets/radio_group.dart';
+import '../../components/qeustion.dart';
+import '../../helpers/quiz.dart';
+import '../../models/quiz_models.dart';
+import '../../widgets/dialogs/quiz_buttons_dialogs.dart';
+import '../../widgets/radio_group.dart';
 
 class TakeQuizScreen extends StatefulWidget {
   final List<QuestionModel> questions;

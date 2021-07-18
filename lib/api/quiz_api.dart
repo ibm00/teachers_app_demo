@@ -1,10 +1,10 @@
 import 'dart:collection';
 
 import 'package:http/http.dart' as http;
-import 'package:teachers_app/constants.dart';
+import '../constants.dart';
 import 'dart:convert';
 
-import 'package:teachers_app/models/quiz_models.dart';
+import '../models/quiz_models.dart';
 
 class QuizApi {
   static Future<List> getCurrentQuizes(String token) async {
