@@ -6,6 +6,10 @@ class ValidatorHelper {
     if (names.length < 3) return "يجب أن يكون الاسم ثلاثي على الأقل";
   }
 
+  static String? userNameValidator(String data) {
+    if (data.length < 4) return "يجب ألا ييقل رقم الهاتف عن 4 أرقام";
+  }
+
   static String? phoneNumValidator(String data) {
     if (int.tryParse(data) == null) return "أدخل رقم هاتف صالح";
     if (data.length < 11) return "يجب ألا ييقل رقم الهاتف عن 11 رقم";
@@ -13,5 +17,9 @@ class ValidatorHelper {
 
   static String? passValidator(String data) {
     if (data.length < 8) return "يجب ألا تقل كلمة المرور عن 8 خانات";
+  }
+
+  static String? rePassValidator(String data, String data2) {
+    if (data != data2) return "يجب أن تكون كلمتي المرور متشابهتين";
   }
 }

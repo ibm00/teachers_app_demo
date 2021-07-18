@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/providers/quiz_provider.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
-import 'package:teachers_app/screens/quiz/take_quiz.dart';
+import '../../../providers/quiz_provider.dart';
+import '../../../providers/user_data_provider.dart';
+import '../take_quiz.dart';
 import '../../../components/quiz_card.dart';
 
 class CurrentQuizesScreen extends ConsumerWidget {

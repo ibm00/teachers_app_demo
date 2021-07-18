@@ -3,21 +3,31 @@ import 'package:flutter/material.dart';
 import '../../../helpers/validators.dart';
 import '../../../widgets/text_form_field.dart';
 
+enum Years {
+  one,
+  two,
+  three,
+}
+
 class RegisterForm extends StatefulWidget {
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final _formKey = GlobalKey<FormState>();
-
-  //void _saveData
+  String userName = "";
   String name = "";
-  String year = "";
+  Years? year = Years.one;
   String phone = "";
   String dadPhone = "";
   String pass = "";
   String rePass = "";
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _passController = TextEditingController();
+  bool _passVisiblity = false;
+  bool _rePassVisiblity = false;
+  Years? studentYear = Years.one;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +51,38 @@ class _RegisterFormState extends State<RegisterForm> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
+                        "اسم المستخدم",
+                        style: _resTextStyle14,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: MyTextFormField(
+                          textFieldIcon: const Icon(Icons.account_circle),
+                          phoneH: _phoneHeight,
+                          mediaQuery: mediaQuery,
+                          onSaveData: (v) {
+                            userName = v!;
+                          },
+                          validatorFun: (v) =>
+                              ValidatorHelper.userNameValidator(v!),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
                         "الاسم بالكامل",
                         style: _resTextStyle14,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: MyTextFormField(
+                          textFieldIcon: const Icon(Icons.person),
                           phoneH: _phoneHeight,
                           mediaQuery: mediaQuery,
                           onSaveData: (v) {
@@ -70,14 +106,32 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: MyTextFormField(
-                          phoneH: _phoneHeight,
-                          mediaQuery: mediaQuery,
-                          onSaveData: (v) {
-                            year = v!;
-                          },
-                          validatorFun: (v) =>
-                              ValidatorHelper.nameValidator(v!),
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: DropdownButton(
+                            isExpanded: true,
+                            value: studentYear,
+                            items: const [
+                              DropdownMenuItem(
+                                value: Years.one,
+                                child: Text("الأولى"),
+                              ),
+                              DropdownMenuItem(
+                                value: Years.two,
+                                child: Text("الثانية"),
+                              ),
+                              DropdownMenuItem(
+                                value: Years.three,
+                                child: Text("الثالثة"),
+                              ),
+                            ],
+                            onChanged: (Years? v) {
+                              setState(() {
+                                studentYear = v;
+                                year = v;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -95,6 +149,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: MyTextFormField(
+                          textFieldIcon: const Icon(Icons.phone_enabled),
+                          myKeyboardType: TextInputType.phone,
                           phoneH: _phoneHeight,
                           mediaQuery: mediaQuery,
                           onSaveData: (v) {
@@ -119,6 +175,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: MyTextFormField(
+                          textFieldIcon: const Icon(Icons.phone_enabled),
+                          myKeyboardType: TextInputType.phone,
                           phoneH: _phoneHeight,
                           mediaQuery: mediaQuery,
                           onSaveData: (v) {
@@ -143,6 +201,19 @@ class _RegisterFormState extends State<RegisterForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: MyTextFormField(
+                          mySuffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _passVisiblity = !_passVisiblity;
+                              });
+                            },
+                            icon: _passVisiblity
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                          ),
+                          textFieldIcon: const Icon(Icons.lock),
+                          passField: !_passVisiblity,
+                          myController: _passController,
                           phoneH: _phoneHeight,
                           mediaQuery: mediaQuery,
                           onSaveData: (v) {
@@ -167,13 +238,27 @@ class _RegisterFormState extends State<RegisterForm> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: MyTextFormField(
+                          mySuffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _rePassVisiblity = !_rePassVisiblity;
+                              });
+                            },
+                            icon: _rePassVisiblity
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                          ),
+                          textFieldIcon: const Icon(Icons.lock),
+                          passField: !_rePassVisiblity,
                           phoneH: _phoneHeight,
                           mediaQuery: mediaQuery,
                           onSaveData: (v) {
                             rePass = v!;
                           },
-                          validatorFun: (v) =>
-                              ValidatorHelper.passValidator(v!),
+                          validatorFun: (v) => ValidatorHelper.rePassValidator(
+                            v!,
+                            _passController.text,
+                          ),
                         ),
                       ),
                     ],
@@ -194,11 +279,13 @@ class _RegisterFormState extends State<RegisterForm> {
               onPressed: () {
                 if (!_formKey.currentState!.validate()) return;
                 _formKey.currentState!.save();
+                print(userName);
                 print(name);
                 print(year);
                 print(phone);
                 print(dadPhone);
                 print(pass);
+                print(rePass);
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<OutlinedBorder?>(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:teachers_app/providers/loading_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/screens/auth/register_screen/register_screen.dart';
 
 class WelcomScreen extends StatelessWidget {
   final TextStyle textStyle = const TextStyle(
@@ -68,18 +71,25 @@ class WelcomScreen extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: mediaQuery.height * .02),
-                    child: SvgPicture.asset(
-                      'assets/images/button_group.svg',
-                      width: 0.1 *
-                          ((orn == Orientation.landscape)
-                              ? mediaQuery.height
-                              : mediaQuery.width),
-                      height: 0.19 *
-                          ((orn == Orientation.landscape)
-                              ? mediaQuery.height
-                              : mediaQuery.width),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => RegisterScreen()));
+                      //context.read(loadingProvider).state = true;
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: mediaQuery.height * .02),
+                      child: SvgPicture.asset(
+                        'assets/images/button_group.svg',
+                        width: 0.1 *
+                            ((orn == Orientation.landscape)
+                                ? mediaQuery.height
+                                : mediaQuery.width),
+                        height: 0.19 *
+                            ((orn == Orientation.landscape)
+                                ? mediaQuery.height
+                                : mediaQuery.width),
+                      ),
                     ),
                   ),
                 ),
