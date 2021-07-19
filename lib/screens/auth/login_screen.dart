@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:teachers_app/api/auth_api.dart';
+import 'package:teachers_app/providers/loading_provider.dart';
+import 'package:teachers_app/providers/user_data_provider.dart';
+import 'package:teachers_app/screens/auth/register_screen/register_screen.dart';
+import 'package:teachers_app/screens/home/home_screen.dart';
+import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import 'package:teachers_app/widgets/dialogs/show_erro_dialog.dart';
 import '../../helpers/validators.dart';
 import '../../widgets/text_form_field.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -72,7 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => RegisterScreen()));
+                        },
                         icon: Icon(
                           Icons.close,
                           size: 0.05 * _phoneWidth,
@@ -214,8 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onSaveData: (v) {
                                     _pass = v!;
                                   },
-                                  validatorFun: (v) =>
-                                      ValidatorHelper.passValidator(v!),
+                                  validatorFun: (v) => _isStudent
+                                      ? ValidatorHelper.passValidator(v!)
+                                      : null,
                                 ),
                               ),
                             ],
@@ -233,12 +247,59 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: .11 * mediaQuery.width,
                     ),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState!.validate()) return;
                         _formKey.currentState!.save();
-                        AuthAPI.loginMe(password: "1", userName: userName);
-                        print(userName);
-                        print(_pass);
+                        if (_isStudent) {
+                          try {
+                            context.read(loadingProvider).state = true;
+                            Map dataFromLogin = await AuthAPI.loginMe(
+                                password: _pass, userName: userName);
+                            bool succes = dataFromLogin['sucess'] as bool;
+                            if (succes) {
+                              Map? _userData = await AuthAPI.getStudentDetails(
+                                  dataFromLogin['token'] as String);
+                              if (_userData != null) {
+                                // check active or not
+                                bool isActive = _userData['active'] as bool;
+                                if (isActive == false) {
+                                  context.read(loadingProvider).state = false;
+
+                                  showErrorDialog(context,
+                                      'انت غير مسموح لك بدخول التطبيق تواصل مع المدرس لمعرفة التفاصيل');
+                                } else {
+                                  // store data in local storage and navigate to home screen
+                                  GetStorage()
+                                      .write('token', dataFromLogin['token']);
+                                  GetStorage().write('isStudent', true);
+                                  context
+                                      .read(userDataProvider)
+                                      .fromMap(_userData);
+                                  context.read(userDataProvider).token =
+                                      dataFromLogin['token'] as String;
+                                  context.read(loadingProvider).state = false;
+
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => HomeScreen()));
+                                }
+                              }
+                            } else {
+                              context.read(loadingProvider).state = false;
+
+                              showCustomToast(dataFromLogin['msg'] as String);
+                            }
+                          } catch (e) {
+                            context.read(loadingProvider).state = false;
+
+                            print('this is error from catch in login :$e');
+                            showErrorDialog(context,
+                                'تعذر تسجيل الدخول الرجاء المحاولة مرة اخري');
+                          }
+                        } else {
+                          await AuthAPI.fatherLogin(_pass, context);
+                        }
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all<OutlinedBorder?>(

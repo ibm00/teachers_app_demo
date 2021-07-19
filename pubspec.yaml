@@ -36,6 +36,7 @@ dependencies:
   awesome_dialog: ^2.1.0
   lottie: ^1.1.0
   device_info: ^2.0.2
+  get_storage: ^2.0.2
  
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:teachers_app/screens/auth/after_registeration_page.dart';
 import 'package:teachers_app/screens/auth/welcom_screen.dart';
 import 'providers/loading_provider.dart';
 import 'screens/auth/login_screen.dart';
@@ -13,9 +15,11 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'screens/home/profile/profile_screen.dart';
 import 'screens/quiz/take_quiz.dart';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
+
   runApp(
     DevicePreview(
       enabled: false,
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => RegisterScreen(),
+        '/': (_) => RootWidget(),
       },
     );
   }

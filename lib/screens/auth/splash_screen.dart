@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/screens/auth/disactive_screen.dart';
+import 'package:teachers_app/screens/auth/login_screen.dart';
 import '../../constants.dart';
 import '../../providers/loading_provider.dart';
 import '../../providers/start_app_logic_provider.dart';
@@ -30,11 +32,11 @@ class RootWidget extends StatelessWidget {
             data: (logicResult) {
               switch (logicResult) {
                 case UserStatus.disActive:
-                  return Container();
+                  return DisActiveScreen();
 
                 case UserStatus.loggedFather:
                   // Father home screen
-                  return HomeScreen();
+                  return LoginScreen();
 
                 case UserStatus.loggedStudent:
                   return HomeScreen();

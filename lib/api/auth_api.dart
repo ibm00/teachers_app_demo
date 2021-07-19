@@ -1,11 +1,72 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:teachers_app/screens/auth/after_registeration_page.dart';
 import 'package:teachers_app/services/device_info.dart';
+import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import 'package:teachers_app/widgets/dialogs/show_erro_dialog.dart';
 import '../constants.dart';
 
 class AuthAPI {
-  static Future<String?> loginMe({
+  static Future? fatherLogin(String code, BuildContext context) async {
+    try {
+      http.Response response = await http.post(
+          Uri.parse(
+            "$APP_API/api/father/login/",
+          ),
+          headers: <String, String>{
+            "Content-Type": "application/json",
+          },
+          body: json.encode({
+            'code': int.parse(code),
+          }));
+      if (response.statusCode == 200) {
+        Map m = json.decode(response.body) as Map;
+        String token = m['key'] as String;
+        GetStorage().write('token', token);
+        GetStorage().write('isStudent', false);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) {
+          return Scaffold(
+            body: Center(
+              child: Text('this is father view'),
+            ),
+          );
+        }));
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        print(json.decode(response.body));
+        showCustomToast('هذا الكود غير مسجل لاي طالب لدينا');
+      } else {
+        showErrorDialog(context, 'الرجاء التأكد من الاتصال بالانترنت');
+      }
+    } catch (e) {
+      print(e);
+      showCustomToast('حدث خطأ الرجاء المحاولة مرة اخري ');
+    }
+  }
+
+  static Future<Map?>? getStudentDetails(String token) async {
+    try {
+      http.Response response = await http.get(Uri.parse("$APP_API/api/me"),
+          headers: {"Authorization": "Token $token"});
+      if (response.statusCode == 200) {
+        List l = json.decode(response.body) as List;
+        Map userData = l[0] as Map;
+        return userData;
+      } else {
+        print(
+            'this is get Student details status code : ${response.statusCode}');
+        print(json.decode(response.body));
+        showCustomToast('حدث خطأ الرجاء المحاولة مرة اخري لاحقا ');
+      }
+    } catch (e) {
+      print(e);
+      showCustomToast('حدث خطأ الرجاء المحاولة مرة اخري لاحقا ');
+    }
+  }
+
+  static Future<Map> loginMe({
     String? userName,
     String? password,
   }) async {
@@ -17,22 +78,31 @@ class AuthAPI {
             "username": userName,
             "password": password,
             "mobile_id": "2651",
+            //               "mobile_id": '$mobileInfo/$userName',
           },
         ),
         headers: <String, String>{
           "Content-Type": "application/json",
         });
+
     if (res.statusCode == 200) {
-      final token = json.decode(res.body) as Map;
-      final sToken = token["key"] as String;
-      print(token);
-      return sToken;
+      final t = json.decode(res.body) as Map;
+      final token = t["key"] as String;
+
+      return {
+        'sucess': true,
+        'token': token,
+      };
     } else {
-      print(json.decode(res.body));
+      return {
+        'sucess': false,
+        'msg': 'بيانات الطالب غير صحيحة',
+      };
     }
   }
 
-  static Future<Map<String, Object>> registerMe({
+  static Future? registerMe({
+    required BuildContext context,
     String? userName,
     String? name,
     String? password1,
@@ -61,14 +131,19 @@ class AuthAPI {
         "Content-Type": "application/json",
       },
     );
-    if (res.statusCode == 200) {
-      final Map dataMap = json.decode(res.body) as Map;
-      print(json.decode(res.body));
-      return {};
+    print(res.statusCode);
+    Map data = json.decode(res.body) as Map;
+    if (res.statusCode == 201 || res.statusCode == 201) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => AfterRegiseterationScreen()));
+    } else if (res.statusCode >= 400 && res.statusCode < 500) {
+      if (data['username'] != null) {
+        showCustomToast('اسم المستخدم تم استخدامه من قبل');
+      } else {
+        showCustomToast('تأكد من ادخال رقم هاتف صحيح');
+      }
     } else {
-      print(res.statusCode);
-      print(json.decode(res.body));
-      return {};
+      showCustomToast('تأكد من الاتصال بالانترنت');
     }
   }
 }

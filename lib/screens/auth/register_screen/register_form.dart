@@ -277,10 +277,11 @@ class _RegisterFormState extends State<RegisterForm> {
               height: .1 * mediaQuery.width,
             ),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (!_formKey.currentState!.validate()) return;
                 _formKey.currentState!.save();
-                AuthAPI.registerMe(
+                await AuthAPI.registerMe(
+                  context: context,
                   userName: userName,
                   name: name,
                   fatherPhone: dadPhone,
@@ -289,13 +290,6 @@ class _RegisterFormState extends State<RegisterForm> {
                   phoneNumber: phone,
                   year: year,
                 );
-                print(userName);
-                print(name);
-                print(year);
-                print(phone);
-                print(dadPhone);
-                print(pass);
-                print(rePass);
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<OutlinedBorder?>(

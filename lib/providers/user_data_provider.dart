@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,4 +16,12 @@ class _UserDataProvider extends ChangeNotifier {
   String groupName = 'مجموعة ٢ السبت';
   String yearName = 'الصف الثالت الثانوي';
   String fatherCode = '54g658e7rt86e7rt86';
+
+  void fromMap(Map map) {
+    userName = map['username'] as String;
+    // fullName = map['fullName'];
+    //groupName = map['groupName'];
+    yearName = map['year'] as String;
+    fatherCode = (map['father_code'] as int).toString();
+  }
 }

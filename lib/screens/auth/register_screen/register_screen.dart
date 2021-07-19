@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:teachers_app/screens/auth/login_screen.dart';
 import 'register_form.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -43,7 +45,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          exit(0);
+                        },
                         icon: Icon(
                           Icons.close,
                           size: 0.05 * _phoneWidth,
@@ -70,7 +74,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      },
                       child: Text(
                         "قم بتسجيل الدخول",
                         style: TextStyle(
@@ -80,7 +87,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      },
                       child: Text(
                         "لديك حساب بالفعل؟",
                         style: TextStyle(
