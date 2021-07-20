@@ -133,7 +133,7 @@ class AuthAPI {
     );
     print(res.statusCode);
     Map data = json.decode(res.body) as Map;
-    if (res.statusCode == 201 || res.statusCode == 201) {
+    if (res.statusCode == 200 || res.statusCode == 201) {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => AfterRegiseterationScreen()));
     } else if (res.statusCode >= 400 && res.statusCode < 500) {

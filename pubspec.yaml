@@ -37,6 +37,7 @@ dependencies:
   lottie: ^1.1.0
   device_info: ^2.0.2
   get_storage: ^2.0.2
+  expansion_tile_card: ^2.0.0
  
 dev_dependencies:
   flutter_test:

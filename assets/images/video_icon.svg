@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="52" height="52" viewBox="0 0 52 52">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.473" y1="-0.558" x2="0.947" y2="1.226" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#5464d3"/>
+      <stop offset="1" stop-color="#acb5fd"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.348" y1="0.173" x2="0.673" y2="1.518" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#08d5c9"/>
+      <stop offset="1" stop-color="#3e53d9"/>
+    </linearGradient>
+    <filter id="Icon_ionic-ios-play-circle" x="0" y="0" width="52" height="52" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#5464d3" flood-opacity="0.502"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_136" data-name="Group 136" transform="translate(-6205 -263)">
+    <circle id="Ellipse_46" data-name="Ellipse 46" cx="20" cy="20" r="20" transform="translate(6211 266)" fill="url(#linear-gradient)"/>
+    <circle id="Ellipse_54" data-name="Ellipse 54" cx="6.5" cy="6.5" r="6.5" transform="translate(6225 279)" fill="url(#linear-gradient-2)"/>
+    <g transform="matrix(1, 0, 0, 1, 6205, 263)" filter="url(#Icon_ionic-ios-play-circle)">
+      <path id="Icon_ionic-ios-play-circle-2" data-name="Icon ionic-ios-play-circle" d="M14.375,3.375a11,11,0,1,0,11,11A11,11,0,0,0,14.375,3.375Zm4.432,11.206-7.256,4.389a.235.235,0,0,1-.354-.206V9.986a.234.234,0,0,1,.354-.206l7.256,4.389A.242.242,0,0,1,18.807,14.581Z" transform="translate(11.63 8.63)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

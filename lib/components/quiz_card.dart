@@ -24,123 +24,130 @@ class QuizCardComponent extends StatelessWidget {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     Orientation or = MediaQuery.of(context).orientation;
-    return Container(
-      width: w * 0.9,
-      height: w * 0.6,
-      margin: EdgeInsets.symmetric(horizontal: w * 0.03),
-      padding: EdgeInsets.symmetric(horizontal: w * 0.02),
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          double newH = constraints.maxHeight;
-          double newW = constraints.maxWidth;
-          return Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // this is placeholder notice the text colot is white
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '15',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: newW * 0.06),
-                          ),
-                          Text(
-                            "/" + '20',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: newW * 0.06),
-                          )
-                        ],
-                      ),
-                      // End of PlaceHolder
-                      Expanded(
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: ListTile(
-                            title: Text(
-                              examName,
+      child: Container(
+        width: w * 0.9,
+        height: w * 0.6,
+        margin: EdgeInsets.symmetric(horizontal: w * 0.03),
+        padding: EdgeInsets.symmetric(horizontal: w * 0.02),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            double newH = constraints.maxHeight;
+            double newW = constraints.maxWidth;
+            return Stack(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // this is placeholder notice the text colot is white
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '15',
                               style: TextStyle(
-                                fontSize: newW * 0.06,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: newW * 0.06),
                             ),
-                            subtitle: Text(
-                              time,
+                            Text(
+                              "/" + '20',
                               style: TextStyle(
-                                  fontSize: newW * 0.03, color: Colors.grey),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: newW * 0.06),
+                            )
+                          ],
+                        ),
+                        // End of PlaceHolder
+                        Expanded(
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: ListTile(
+                              title: Text(
+                                examName,
+                                style: TextStyle(
+                                  fontSize: newW * 0.06,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              subtitle: Text(
+                                time,
+                                style: TextStyle(
+                                    fontSize: newW * 0.03, color: Colors.grey),
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                      SvgPicture.asset(
-                        'assets/images/quiz_icon.svg',
-                        width: newW * 0.25,
+                        SvgPicture.asset(
+                          'assets/images/quiz_icon.svg',
+                          width: newW * 0.25,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      text,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: newW * 0.05,
+                          color: const Color(0xFF2F3C4E)),
+                    ),
+                    SizedBox(
+                      height: newH * 0.05,
+                    ),
+                    GestureDetector(
+                      onTap: callback,
+                      child: SvgPicture.asset(
+                        isCurrent
+                            ? 'assets/images/start_quiz.svg'
+                            : 'assets/images/show_quiz.svg',
+                        width: newW * 0.85,
                       ),
-                    ],
-                  ),
-                  Text(
-                    text,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: newW * 0.05, color: const Color(0xFF2F3C4E)),
-                  ),
-                  SizedBox(
-                    height: newH * 0.05,
-                  ),
-                  GestureDetector(
-                    onTap: callback,
-                    child: SvgPicture.asset(
-                      isCurrent
-                          ? 'assets/images/start_quiz.svg'
-                          : 'assets/images/show_quiz.svg',
-                      width: newW * 0.85,
+                    )
+                  ],
+                ),
+                if (!isCurrent)
+                  Positioned(
+                    left: newW * 0.03,
+                    top: newW * 0.03,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          studentMark.toString(),
+                          style: TextStyle(
+                              color: const Color(0xFF5464D3),
+                              fontWeight: FontWeight.bold,
+                              fontSize: newW * 0.05),
+                        ),
+                        Text(
+                          "/${totalMark.toString()}",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: newW * 0.05),
+                        )
+                      ],
                     ),
                   )
-                ],
-              ),
-              if (!isCurrent)
-                Positioned(
-                  left: newW * 0.03,
-                  top: newW * 0.03,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        studentMark.toString(),
-                        style: TextStyle(
-                            color: const Color(0xFF5464D3),
-                            fontWeight: FontWeight.bold,
-                            fontSize: newW * 0.05),
-                      ),
-                      Text(
-                        "/${totalMark.toString()}",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: newW * 0.05),
-                      )
-                    ],
-                  ),
-                )
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
