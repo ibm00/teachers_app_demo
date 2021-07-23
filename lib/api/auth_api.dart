@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:teachers_app/screens/auth/after_registeration_page.dart';
-import 'package:teachers_app/services/device_info.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
-import 'package:teachers_app/widgets/dialogs/show_erro_dialog.dart';
+
 import '../constants.dart';
+import '../screens/auth/after_registeration_page.dart';
+import '../services/device_info.dart';
+import '../widgets/dialogs/flutter_toast.dart';
 
 class AuthAPI {
-  static Future? fatherLogin(String code, BuildContext context) async {
+  static Future<String?>? fatherLogin(String code) async {
     try {
       http.Response response = await http.post(
           Uri.parse(
@@ -25,20 +25,14 @@ class AuthAPI {
       if (response.statusCode == 200) {
         Map m = json.decode(response.body) as Map;
         String token = m['key'] as String;
-        GetStorage().write('token', token);
         GetStorage().write('isStudent', false);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) {
-          return Scaffold(
-            body: Center(
-              child: Text('this is father view'),
-            ),
-          );
-        }));
+        GetStorage().write('father_code', code);
+        return token;
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         print(json.decode(response.body));
         showCustomToast('هذا الكود غير مسجل لاي طالب لدينا');
       } else {
-        showErrorDialog(context, 'الرجاء التأكد من الاتصال بالانترنت');
+        showCustomToast('الرجاء التأكد من الاتصال بالانترنت');
       }
     } catch (e) {
       print(e);

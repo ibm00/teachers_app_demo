@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teachers_app/constants.dart';
+
+import '../../../constants.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({Key? key}) : super(key: key);

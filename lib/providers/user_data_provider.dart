@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,7 +6,7 @@ final userDataProvider =
     ChangeNotifierProvider<_UserDataProvider>((ref) => _UserDataProvider());
 
 class _UserDataProvider extends ChangeNotifier {
-  String token = '4282975c1edfe8c51d44dbc3db1bd95c17fe4b02';
+  String token = '7ba1a288998a4ac5b339d493ff121a8856d6811b';
   bool isStudent = true;
   String userName = 'ahmed123';
   String fullName = 'احمد فرج السكري';

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:teachers_app/widgets/loading.dart';
 
+import '../../widgets/loading.dart';
 import 'login_screen.dart';
 
 class DisActiveScreen extends StatefulWidget {

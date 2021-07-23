@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../widgets/loading.dart';
-import '../auth/welcom_screen.dart';
-import 'profile/profile_screen.dart';
+
+import '../../helpers/video_helper.dart';
+import '../lessions/lesson_detail/video/video_preview.dart';
 import '../quiz/1-quiz_home/quiz_home.dart';
 import 'news_part.dart';
+import 'profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -73,10 +74,7 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () async {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (_) => QrCodeScanScreen()));
-            },
+            onTap: () async {},
             child: SvgPicture.asset(
               'assets/images/barcode_icon.svg',
               width: w * 0.08,
@@ -98,9 +96,22 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          SvgPicture.asset(
-            'assets/images/notification_icon.svg',
-            width: w * 0.1,
+          GestureDetector(
+            onTap: () {
+              Map map = VideoHelper.getValidUrlForVideo(
+                  'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => VideoPreviewScreen(
+                            url: map['url'] as String,
+                            isYouTube: map['isYouTube'] as bool,
+                          )));
+            },
+            child: SvgPicture.asset(
+              'assets/images/notification_icon.svg',
+              width: w * 0.1,
+            ),
           ),
         ],
       ),

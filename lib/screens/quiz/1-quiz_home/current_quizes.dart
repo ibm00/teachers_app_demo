@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../providers/quiz_provider.dart';
-import '../../../providers/user_data_provider.dart';
-import '../take_quiz.dart';
+
 import '../../../components/quiz_card.dart';
+import '../../../providers/quiz_provider.dart';
+import '../take_quiz.dart';
 
 class CurrentQuizesScreen extends ConsumerWidget {
   @override
@@ -25,6 +25,7 @@ class CurrentQuizesScreen extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => TakeQuizScreen(
+                      quizId: value[index].id,
                       questions: value[index].questions,
                       examName: value[index].title,
                     ),

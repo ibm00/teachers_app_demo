@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/components/quiz_card.dart';
-import 'package:teachers_app/constants.dart';
-import 'package:teachers_app/providers/indices_provider.dart';
-import 'package:teachers_app/screens/lessions/lesson_detail/video_widget.dart';
-import 'attachment_widget.dart';
+
+import 'package:teachers_app/models/lessons_model.dart';
+
+import '../../../components/quiz_card.dart';
+import '../../../constants.dart';
+import '../../../providers/indices_provider.dart';
+import 'attachment/attachment_widget.dart';
+import 'video/video_card.dart';
 
 class LessonDetailScreen extends StatelessWidget {
+  final LessonModel lessonModel;
+  const LessonDetailScreen({
+    required this.lessonModel,
+  });
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -19,7 +26,7 @@ class LessonDetailScreen extends StatelessWidget {
         backgroundColor: kSecondaryColor,
         centerTitle: true,
         title: Text(
-          'اسم الدرس',
+          lessonModel.title,
           style: TextStyle(
             color: kPrimaryColor,
           ),
@@ -87,52 +94,6 @@ class LessonDetailScreen extends StatelessWidget {
                                   bottomRight: Radius.circular(10),
                                   topRight: Radius.circular(10)),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     context.read(quizHomeScreenIndex).state = false;
-                            //   },
-                            //   child: Material(
-                            //     elevation: !isCurrent ? 5 : 0,
-                            //   borderRadius: const BorderRadius.only(
-                            //   bottomLeft: Radius.circular(15),
-                            //   topLeft: Radius.circular(15)),
-                            //     child: SizedBox(
-                            //       width: (rowW / 2) - 3,
-                            //       child: Text(
-                            //         'السابقة',
-                            //         textAlign: TextAlign.center,
-                            //         style: TextStyle(
-                            //             fontSize: w * 0.05,
-                            //             color: !isCurrent
-                            //                 ? const Color(0xFF5464D3)
-                            //                 : Colors.grey),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     context.read(quizHomeScreenIndex).state = true;
-                            //   },
-                            //   child: Material(
-                            //     elevation: isCurrent ? 5 : 0,
-                            //     borderRadius: const BorderRadius.only(
-                            //         bottomRight: Radius.circular(15),
-                            //         topRight: Radius.circular(15)),
-                            //     child: SizedBox(
-                            //       width: (rowW / 2) - 3,
-                            //       child: Text(
-                            //         'الحالية',
-                            //         textAlign: TextAlign.center,
-                            //         style: TextStyle(
-                            //             fontSize: w * 0.05,
-                            //             color: isCurrent
-                            //                 ? const Color(0xFF5464D3)
-                            //                 : Colors.grey),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         );
                       },
@@ -149,9 +110,10 @@ class LessonDetailScreen extends StatelessWidget {
               imageUrl:
                   'https://cf.bstatic.com/xdata/images/hotel/max1024x768/268357210.jpg?k=d9a946b1950b74dfb3278f8ec8870cf79089c2c127f424ee543eb98b2b859c62&o=&hp=1',
             ),
+            VideoCardWidget(),
             Padding(
               padding: EdgeInsets.only(
-                  left: w * 0.07, right: w * 0.07, top: h * 0.015),
+                  left: w * 0.07, right: w * 0.07, top: h * 0.01),
               child: QuizCardComponent(
                 isCurrent: true,
                 callback: () {},
@@ -162,7 +124,6 @@ class LessonDetailScreen extends StatelessWidget {
                 studentMark: 20,
               ),
             ),
-            VideoCardWidget(),
           ],
         ),
       ),

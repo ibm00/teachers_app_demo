@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../../components/quiz_card.dart';
-import '../../../providers/indices_provider.dart';
 
+import '../../../providers/indices_provider.dart';
 import 'current_quizes.dart';
 import 'old_quizes.dart';
 

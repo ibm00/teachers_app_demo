@@ -12,7 +12,7 @@ class VideoHelper {
     if (isYouTubeUrl) {
       return {
         'isYouTube': isYouTubeUrl,
-        'url': convertUrlToId(url),
+        'url': url,
       };
     } else {
       return url.contains('https://drive.google.com')
@@ -22,22 +22,6 @@ class VideoHelper {
               'url': url,
             };
     }
-  }
-
-  static String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
-    if (!url.contains("http") && (url.length == 11)) return url;
-    if (trimWhitespaces) url = url.trim();
-
-    for (var regex in [
-      r'^https:\/\/(?:www\.|m\.)?youtube\.com\/watch\?v=([_\-a-zA-Z0-9]{11}).*$',
-      r'^https:\/\/(?:www\.|m\.)?youtube(?:-nocookie)?\.com\/embed\/([_\-a-zA-Z0-9]{11}).*$',
-      r'^https:\/\/youtu\.be\/([_\-a-zA-Z0-9]{11}).*$',
-    ]) {
-      Match? match = RegExp(regex).firstMatch(url);
-      if (match != null && match.groupCount >= 1) return match.group(1);
-    }
-
-    return null;
   }
 
   static Map<String, dynamic> getGoolgeDriveVideoUrl(List splitedUrl) {

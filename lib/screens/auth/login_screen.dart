@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:teachers_app/api/auth_api.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
-import 'package:teachers_app/screens/auth/register_screen/register_screen.dart';
-import 'package:teachers_app/screens/home/home_screen.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
-import 'package:teachers_app/widgets/dialogs/show_erro_dialog.dart';
+
+import '../../api/auth_api.dart';
 import '../../helpers/validators.dart';
+import '../../providers/loading_provider.dart';
+import '../../providers/user_data_provider.dart';
+import '../../widgets/dialogs/flutter_toast.dart';
+import '../../widgets/dialogs/show_erro_dialog.dart';
 import '../../widgets/text_form_field.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../father/father_home.dart';
+import '../home/home_screen.dart';
+import 'register_screen/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -298,7 +300,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'تعذر تسجيل الدخول الرجاء المحاولة مرة اخري');
                           }
                         } else {
-                          await AuthAPI.fatherLogin(_pass, context);
+                          String? _token = await AuthAPI.fatherLogin(_pass);
+                          if (_token != null) {
+                            Map? userData =
+                                await AuthAPI.getStudentDetails(_token);
+                            if (userData != null) {
+                              context.read(userDataProvider).token = _token;
+                              context.read(userDataProvider).fromMap(userData);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FatherHomeScreen(),
+                                  ));
+                            }
+                          }
                         }
                       },
                       style: ButtonStyle(

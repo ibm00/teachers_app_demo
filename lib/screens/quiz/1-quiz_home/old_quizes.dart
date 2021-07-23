@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../components/quiz_card.dart';
 
 class OldQuizesScreen extends StatelessWidget {

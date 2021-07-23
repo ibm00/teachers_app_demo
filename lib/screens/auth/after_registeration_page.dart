@@ -1,7 +1,9 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:teachers_app/screens/auth/login_screen.dart';
+
+import 'login_screen.dart';
 
 class DetectDeviceOreintation extends StatelessWidget {
   final Widget widget;

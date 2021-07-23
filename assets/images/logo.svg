@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="182.175" height="72.893" viewBox="0 0 182.175 72.893">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1" y1="0.361" x2="0.116" y2="0.781" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#41c8c2"/>
+      <stop offset="1" stop-color="#36b5af"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.934" y1="0.927" x2="0.088" y2="0.228" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="1.142" y1="0.5" x2="0.142" y2="0.471" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#41c8c2"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="0.82" y1="-0.085" x2="-0.114" y2="0.898" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#646ac2"/>
+      <stop offset="0.519" stop-color="#696ed4"/>
+      <stop offset="1" stop-color="#bbbfff"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_179" data-name="Group 179" transform="translate(-56.825 -244.554)">
+    <g id="Group_1" data-name="Group 1" transform="translate(-1120.89 -35.089)">
+      <path id="Path_3" data-name="Path 3" d="M.02,9.152,15.027,0,72.893,33.343,15.038,66.206,0,56.833s37.292-23.7,37.188-23.489S.15,9.349.02,9.152Z" transform="translate(1177.718 352.535) rotate(-90)" fill="#41c8c2"/>
+      <path id="Path_5" data-name="Path 5" d="M.014,6.6,10.835,0,52.559,24.042l-41.715,23.7L0,40.979S26.889,23.891,26.814,24.042.108,6.741.014,6.6Z" transform="translate(1186.949 342.368) rotate(-90)" fill="url(#linear-gradient)"/>
+      <path id="Path_6" data-name="Path 6" d="M.012,5.474,8.989,0,43.6,19.945,9,39.6,0,34S22.307,19.82,22.245,19.945.089,5.593.012,5.474Z" transform="translate(1191.02 337.89) rotate(-90)" fill="url(#linear-gradient-2)"/>
+      <path id="Path_7" data-name="Path 7" d="M.012,5.474,8.989,0,43.6,19.945,9,39.6,0,34S22.307,19.82,22.245,19.945.089,5.593.012,5.474Z" transform="translate(1191.02 343.92) rotate(-90)" fill="url(#linear-gradient-3)"/>
+      <path id="Path_4" data-name="Path 4" d="M30.761,9.155,15.014,0,0,9.155v47.68L15.014,66.21l16.412-9.375L15.014,48.046V17.724Z" transform="translate(1177.715 352.515) rotate(-90)" fill="url(#linear-gradient-4)"/>
+    </g>
+    <text id="ofoq" transform="translate(141 292)" fill="#333462" font-size="50" font-family="Helvetica"><tspan x="0" y="0">ofoq</tspan></text>
+    <text id="Learn_smarter" data-name="Learn smarter" transform="translate(142 315)" fill="#333462" font-size="10" font-family="Aileron-Light, Aileron" font-weight="300"><tspan x="0" y="0">LEARN SMARTER</tspan></text>
+  </g>
+</svg>

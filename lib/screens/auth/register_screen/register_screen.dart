@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:teachers_app/screens/auth/login_screen.dart';
+import '../login_screen.dart';
 import 'register_form.dart';
 
 class RegisterScreen extends StatefulWidget {

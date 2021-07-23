@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/screens/auth/register_screen/register_screen.dart';
+
+import 'register_screen/register_screen.dart';
 
 class WelcomScreen extends StatelessWidget {
   final TextStyle textStyle = const TextStyle(

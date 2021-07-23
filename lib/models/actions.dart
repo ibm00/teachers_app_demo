@@ -17,4 +17,17 @@ class ActionModel {
       time: timeago.format(DateTime.parse(map['created'] as String)),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ActionModel &&
+        other.verb == verb &&
+        other.action == action &&
+        other.time == time;
+  }
+
+  @override
+  int get hashCode => verb.hashCode ^ action.hashCode ^ time.hashCode;
 }

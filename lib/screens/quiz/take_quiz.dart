@@ -1,22 +1,24 @@
-import 'dart:io';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
+import 'package:teachers_app/api/quiz_api.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/providers/loading_provider.dart';
+import 'package:teachers_app/providers/user_data_provider.dart';
+import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
 import '../../components/qeustion.dart';
 import '../../helpers/quiz.dart';
 import '../../models/quiz_models.dart';
 import '../../widgets/dialogs/quiz_buttons_dialogs.dart';
-import '../../widgets/radio_group.dart';
 
 class TakeQuizScreen extends StatefulWidget {
   final List<QuestionModel> questions;
   final String examName;
-
+  final int quizId;
   const TakeQuizScreen({
     Key? key,
     required this.questions,
     required this.examName,
+    required this.quizId,
   }) : super(key: key);
   @override
   _TakeQuizScreenState createState() => _TakeQuizScreenState();
@@ -102,7 +104,7 @@ class _TakeQuizScreenState extends State<TakeQuizScreen> {
                                     i < studentAnswers.length;
                                     i++) {
                                   if (studentAnswers[i] == -1) {
-                                    realAnswers.add(-1);
+                                    //  realAnswers.add(-1);
                                     continue;
                                   }
                                   realAnswers.add(widget.questions[i]
@@ -110,7 +112,40 @@ class _TakeQuizScreenState extends State<TakeQuizScreen> {
                                       as int);
                                 }
                                 print(realAnswers);
-                                quizSubmitButton(context);
+                                if (realAnswers.isEmpty) {
+                                  showCustomToast(
+                                      'انت لم تقم بحل اي سؤال بعد!');
+                                  return;
+                                }
+                                showCustomDialog(
+                                    allowDissmiss: true,
+                                    context: context,
+                                    dialogType: DialogType.SUCCES,
+                                    title: 'انت علي وشك انهاء الامتحان',
+                                    cancelText: 'تراجع',
+                                    cancelFun: () {},
+                                    okText: 'تأكيد ',
+                                    okFun: () async {
+                                      String? result = await QuizApi.submitQuiz(
+                                          token: context
+                                              .read(userDataProvider)
+                                              .token,
+                                          quizId: widget.quizId,
+                                          answers: realAnswers);
+                                      if (result != null) {
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 500));
+                                        showCustomDialog(
+                                            allowDissmiss: false,
+                                            context: context,
+                                            dialogType: DialogType.INFO,
+                                            title: result,
+                                            okText: 'حسنا',
+                                            okFun: () {
+                                              Navigator.pop(context);
+                                            });
+                                      }
+                                    });
                               },
                               icon: Icon(
                                 Icons.check,

@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_riverpod/all.dart';
-import '../../../providers/loading_provider.dart';
+
 import '../../../providers/user_data_provider.dart';
+import 'attendence.dart';
 
 class ProfileScreen extends ConsumerWidget {
   @override
@@ -120,17 +121,23 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            _buildOptionsItem(
-                context: context,
-                text: 'الخصوصية',
-                callback: () {
-                  context.read(loadingProvider).state = true;
-                },
-                iconData: Icons.privacy_tip),
+            // _buildOptionsItem(
+            //     context: context,
+            //     text: 'الخصوصية',
+            //     callback: () {
+            //       context.read(loadingProvider).state = true;
+            //     },
+            //     iconData: Icons.privacy_tip),
             _buildOptionsItem(
                 context: context,
                 text: 'سجل الغياب',
-                callback: () {},
+                callback: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AttendanceScreen(),
+                      ));
+                },
                 iconData: Icons.menu_book),
             _buildOptionsItem(
                 context: context,

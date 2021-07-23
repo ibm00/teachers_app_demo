@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 void quizArrowBackButton(BuildContext context) {
   AwesomeDialog(
     context: context,
+
     dialogType: DialogType.WARNING,
     animType: AnimType.BOTTOMSLIDE,
     title: 'أنت علي وشك الخروج من الامتحان',
@@ -17,16 +18,26 @@ void quizArrowBackButton(BuildContext context) {
   )..show();
 }
 
-void quizSubmitButton(BuildContext context) {
+void showCustomDialog({
+  required BuildContext context,
+  required DialogType dialogType,
+  required String title,
+  String? okText,
+  String? cancelText,
+  VoidCallback? okFun,
+  VoidCallback? cancelFun,
+  required bool allowDissmiss,
+}) {
   AwesomeDialog(
+    dismissOnTouchOutside: allowDissmiss,
     context: context,
-    dialogType: DialogType.SUCCES,
+    dialogType: dialogType,
     animType: AnimType.BOTTOMSLIDE,
-    title: 'أنت علي وشك إنهاء من الامتحان',
+    title: title,
     //  desc: 'Dialog description here.............',
-    btnCancelOnPress: () {},
-    btnCancelText: 'تراجع',
-    btnOkText: 'تأكيد',
-    btnOkOnPress: () {},
+    btnCancelOnPress: cancelFun,
+    btnCancelText: cancelText,
+    btnOkText: okText,
+    btnOkOnPress: okFun,
   )..show();
 }

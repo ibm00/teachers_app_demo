@@ -2,21 +2,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:teachers_app/screens/auth/after_registeration_page.dart';
-import 'package:teachers_app/screens/auth/welcom_screen.dart';
-import 'package:teachers_app/screens/home/profile/attendence.dart';
+import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
-import 'providers/loading_provider.dart';
-import 'screens/auth/login_screen.dart';
-import 'screens/auth/register_screen/register_screen.dart';
-import 'screens/auth/splash_screen.dart';
-import 'screens/home/home_screen.dart';
-import 'screens/lessions/lesson_detail/lesson_detail.dart';
-import 'screens/quiz/1-quiz_home/quiz_home.dart';
-import 'widgets/dialogs/quiz_buttons_dialogs.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'screens/home/profile/profile_screen.dart';
-import 'screens/quiz/take_quiz.dart';
+
+import 'screens/lessions/lesson_detail/attachment/pdf_preview.dart';
 
 Future<void> main() async {
   await GetStorage.init();
@@ -45,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => AttendanceScreen(),
+        '/': (_) => LessionsHomeScreen(),
       },
     );
   }

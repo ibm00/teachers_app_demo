@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teachers_app/api/auth_api.dart';
+import '../../../api/auth_api.dart';
 
 import '../../../helpers/validators.dart';
 import '../../../widgets/text_form_field.dart';

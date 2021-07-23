@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/screens/auth/disactive_screen.dart';
-import 'package:teachers_app/screens/auth/login_screen.dart';
+import 'package:flutter_svg/svg.dart';
+
 import '../../constants.dart';
 import '../../providers/loading_provider.dart';
 import '../../providers/start_app_logic_provider.dart';
-import 'welcom_screen.dart';
-import '../home/home_screen.dart';
-import '../../widgets/dialogs/quiz_buttons_dialogs.dart';
 import '../../widgets/loading.dart';
+import '../father/father_home.dart';
+import '../home/home_screen.dart';
+import 'disactive_screen.dart';
+import 'welcom_screen.dart';
 
 class RootWidget extends StatelessWidget {
   @override
@@ -36,7 +37,7 @@ class RootWidget extends StatelessWidget {
 
                 case UserStatus.loggedFather:
                   // Father home screen
-                  return LoginScreen();
+                  return FatherHomeScreen();
 
                 case UserStatus.loggedStudent:
                   return HomeScreen();
@@ -63,9 +64,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Center(
-        child: FlutterLogo(
-          size: MediaQuery.of(context).size.width / 2,
-        ),
+        child: SvgPicture.asset('assets/images/logo.svg'),
       )),
     );
   }
