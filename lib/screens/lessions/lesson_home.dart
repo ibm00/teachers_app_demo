@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:teachers_app/models/lessons_model.dart';
 import 'package:teachers_app/providers/lesson_provider.dart';
 import 'package:teachers_app/screens/lessions/lesson_detail/lesson_detail.dart';
+import 'package:teachers_app/widgets/loading.dart';
 import 'lesson_detail/lesson_detail.dart';
 import '../../constants.dart';
 
@@ -108,11 +109,16 @@ class LessionsHomeScreen extends ConsumerWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          SvgPicture.asset(
-                                            'assets/images/lesson_icon.svg',
-                                            width: w * 0.15,
-                                            height: w * 0.15,
-                                            fit: BoxFit.cover,
+                                          // SvgPicture.asset(
+                                          //   'assets/images/lesson_icon.svg',
+                                          //   width: w * 0.15,
+                                          //   height: w * 0.15,
+                                          //   fit: BoxFit.cover,
+                                          // ),
+                                          Text(
+                                            '${index2 + 1}-  ',
+                                            style:
+                                                TextStyle(fontSize: w * 0.06),
                                           ),
                                           Expanded(
                                             child: Text(
@@ -135,10 +141,14 @@ class LessionsHomeScreen extends ConsumerWidget {
                   ),
                 );
               },
-              loading: () => const CircularProgressIndicator(),
+              loading: () => SizedBox(
+                  height: h / 2,
+                  child: Center(child: LoadingWidgets.getNormalLoading())),
               error: (error, stackTrace) {
                 print('this is future chapters error : $error');
-                return const CircularProgressIndicator();
+                return SizedBox(
+                    height: h / 2,
+                    child: Center(child: LoadingWidgets.getNormalLoading()));
               },
             )
           ],

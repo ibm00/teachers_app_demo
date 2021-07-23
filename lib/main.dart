@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => LessionsHomeScreen(),
+        '/': (_) => HomeScreen(),
       },
     );
   }

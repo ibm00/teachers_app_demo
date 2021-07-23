@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:teachers_app/screens/home/qr_scan_page.dart';
 
 import '../../helpers/video_helper.dart';
 import '../lessions/lesson_detail/video/video_preview.dart';
@@ -74,7 +75,13 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () async {},
+            onTap: () async {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QrCodeScanScreen(),
+                  ));
+            },
             child: SvgPicture.asset(
               'assets/images/barcode_icon.svg',
               width: w * 0.08,
