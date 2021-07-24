@@ -17,7 +17,7 @@ class _UserDataProvider extends ChangeNotifier {
 
   void fromMap(Map map) {
     userName = map['username'] as String;
-    // fullName = map['fullName'];
+    fullName = map['full_name'] as String;
     //groupName = map['groupName'];
     yearName = map['year'] as String;
     fatherCode = (map['father_code'] as int).toString();

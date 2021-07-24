@@ -44,6 +44,9 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^19.2.48-beta
   flutter_barcode_scanner: ^2.0.0
   flutter_windowmanager: ^0.1.0
+  firebase_core: ^1.4.0
+  firebase_messaging: ^10.0.4
+  flutter_svg_provider: ^0.1.9
 dev_dependencies:
   flutter_test:
     sdk: flutter

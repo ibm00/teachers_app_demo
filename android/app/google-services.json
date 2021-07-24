@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "842778334518",
+    "project_id": "learning-app-1-87b94",
+    "storage_bucket": "learning-app-1-87b94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842778334518:android:d99a2acd14d1f8c3380f97",
+        "android_client_info": {
+          "package_name": "com.bonaparta.learn1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842778334518-k1queep8spqiprm1vkt2od0v9kat269f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9bKUj3L7Tcsm_fwgq4fuiQAzu2BwG640"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842778334518-k1queep8spqiprm1vkt2od0v9kat269f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

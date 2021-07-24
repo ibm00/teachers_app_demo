@@ -7,3 +7,7 @@ final currentQuizProvider = FutureProvider<List<CurrentQuizModel>>((ref) async {
   List temp = await QuizApi.getCurrentQuizes(ref.read(userDataProvider).token);
   return temp.map((e) => CurrentQuizModel.fromMap(e)).toList();
 });
+final oldQuizProvider = FutureProvider<List<OldQuizModel>>((ref) async {
+  List temp = await QuizApi.getOldQuizes(ref.read(userDataProvider).token);
+  return temp.map((e) => OldQuizModel.fromMap(e as Map)).toList();
+});

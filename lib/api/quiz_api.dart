@@ -15,7 +15,22 @@ class QuizApi {
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body) as List;
+      return json.decode(utf8.decode(response.bodyBytes)) as List;
+    } else {
+      throw Exception();
+    }
+  }
+
+  static Future<List> getOldQuizes(String token) async {
+    final http.Response response = await http.get(
+      Uri.parse('$APP_API/api/results/'),
+      headers: {
+        'Authorization': 'Token $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(utf8.decode(response.bodyBytes)) as List;
     } else {
       throw Exception();
     }

@@ -128,16 +128,16 @@ class QuizCardComponent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          studentMark.toString(),
+                          totalMark.toString(),
                           style: TextStyle(
-                              color: const Color(0xFF5464D3),
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: newW * 0.05),
                         ),
                         Text(
-                          "/${totalMark.toString()}",
+                          "/${studentMark.toString()}",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: const Color(0xFF5464D3),
                               fontWeight: FontWeight.bold,
                               fontSize: newW * 0.05),
                         )

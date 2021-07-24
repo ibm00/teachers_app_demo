@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -10,6 +11,7 @@ import 'package:teachers_app/screens/auth/welcom_screen.dart';
 import 'package:teachers_app/screens/home/all_news_screen.dart';
 import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
+import 'package:teachers_app/services/notification_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'screens/lessions/lesson_detail/attachment/pdf_preview.dart';
@@ -22,6 +24,7 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
+  await Firebase.initializeApp();
 
   runApp(
     DevicePreview(
@@ -35,6 +38,10 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    if (Platform.isAndroid) {
+      NotificationService.init(context);
+    }
+
     return MaterialApp(
       locale: DevicePreview.locale(context), // Add the locale here
       builder: DevicePreview.appBuilder,
@@ -45,7 +52,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => HomeScreen(),
+        '/': (_) => RootWidget(),
       },
     );
   }

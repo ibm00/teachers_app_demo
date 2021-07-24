@@ -10,6 +10,28 @@ import '../services/device_info.dart';
 import '../widgets/dialogs/flutter_toast.dart';
 
 class AuthAPI {
+  static Future<String> confirmAttendance(String token, String day) async {
+    try {
+      http.Response res = await http.post(Uri.parse('$APP_API/api/me/att/'),
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Token $token',
+          },
+          body: json.encode({'day': day}));
+      Map data = json.decode(utf8.decode(res.bodyBytes)) as Map;
+      print(data);
+
+      if (res.statusCode != 404) {
+        return data['detail'] as String;
+      } else {
+        return 'لا توجد حصة اليوم';
+      }
+    } catch (e) {
+      print('this is confirm attendance error : $e');
+      return 'حدث خطأ الرجاء المحاولة مرة اخري والتأكد من الانترنت';
+    }
+  }
+
   static Future<String?>? fatherLogin(String code) async {
     try {
       http.Response response = await http.post(
