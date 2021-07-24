@@ -43,6 +43,7 @@ dependencies:
   video_player: ^2.1.10
   syncfusion_flutter_pdfviewer: ^19.2.48-beta
   flutter_barcode_scanner: ^2.0.0
+  flutter_windowmanager: ^0.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

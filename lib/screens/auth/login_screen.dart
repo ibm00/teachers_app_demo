@@ -254,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _formKey.currentState!.save();
                         if (_isStudent) {
                           try {
-                            context.read(loadingProvider).state = true;
+                            //  context.read(loadingProvider).state = true;
                             Map dataFromLogin = await AuthAPI.loginMe(
                                 password: _pass, userName: userName);
                             bool succes = dataFromLogin['sucess'] as bool;
@@ -279,21 +279,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .fromMap(_userData);
                                   context.read(userDataProvider).token =
                                       dataFromLogin['token'] as String;
-                                  context.read(loadingProvider).state = false;
-
+                                  //    context.read(loadingProvider).state = false;
+                                  print('this is bayiimooooo');
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (c) => HomeScreen()));
+                                        builder: (context) => HomeScreen(),
+                                      ));
                                 }
                               }
                             } else {
-                              context.read(loadingProvider).state = false;
+                              //    context.read(loadingProvider).state = false;
 
                               showCustomToast(dataFromLogin['msg'] as String);
                             }
                           } catch (e) {
-                            context.read(loadingProvider).state = false;
+                            //   context.read(loadingProvider).state = false;
 
                             print('this is error from catch in login :$e');
                             showErrorDialog(context,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String APP_API = 'http://20.108.14.94';
+const String APP_API = 'http://20.108.42.92';
 enum UserStatus {
   disActive,
   loggedStudent,

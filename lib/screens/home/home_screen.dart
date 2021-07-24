@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:teachers_app/screens/home/qr_scan_page.dart';
-
+import 'package:teachers_app/providers/user_data_provider.dart';
+import 'package:teachers_app/services/qr_service.dart';
 import '../../helpers/video_helper.dart';
 import '../lessions/lesson_detail/video/video_preview.dart';
 import '../quiz/1-quiz_home/quiz_home.dart';
@@ -25,9 +26,15 @@ class HomeScreen extends StatelessWidget {
               height: h * 0.02,
             ),
 
-            Text(
-              ',مرحبا عبعال',
-              style: TextStyle(fontSize: w * 0.1, fontWeight: FontWeight.w600),
+            Consumer(
+              builder: (context, watch, child) {
+                final provider = watch(userDataProvider);
+                return Text(
+                  provider.fullName,
+                  style:
+                      TextStyle(fontSize: w * 0.1, fontWeight: FontWeight.w600),
+                );
+              },
             ),
             Text(
               'كيف يمكننا مساعدتك اليوم ؟',
@@ -76,11 +83,8 @@ class HomeScreen extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () async {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QrCodeScanScreen(),
-                  ));
+              String? result = await QrServices.scanQR();
+              print('result:$result');
             },
             child: SvgPicture.asset(
               'assets/images/barcode_icon.svg',
@@ -106,7 +110,7 @@ class HomeScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Map map = VideoHelper.getValidUrlForVideo(
-                  'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4');
+                  'https://www.youtube.com/watch?v=QLcGs-eosOE&list=RDQLcGs-eosOE&start_radio=1&ab_channel=Nota-%D9%86%D9%88%D8%AA%D9%87');
               Navigator.push(
                   context,
                   MaterialPageRoute(

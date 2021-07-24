@@ -71,7 +71,7 @@ class AuthAPI {
           {
             "username": userName,
             "password": password,
-            "mobile_id": "2651",
+            "mobile_id": "$mobileInfo/$userName",
             //               "mobile_id": '$mobileInfo/$userName',
           },
         ),
@@ -79,7 +79,7 @@ class AuthAPI {
           "Content-Type": "application/json",
         });
 
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200 || res.statusCode == 201) {
       final t = json.decode(res.body) as Map;
       final token = t["key"] as String;
 
@@ -115,7 +115,7 @@ class AuthAPI {
           "name": name,
           "password1": password1,
           "password2": password2,
-          "year": year,
+          "year": 1,
           "phone_number": "+2$phoneNumber",
           "father_phone": "+2$fatherPhone",
           "mobile_id": "$mobileInfo/$userName",

@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:teachers_app/screens/auth/login_screen.dart';
 
 import '../../../providers/user_data_provider.dart';
 import 'attendence.dart';
@@ -147,7 +149,14 @@ class ProfileScreen extends ConsumerWidget {
             _buildOptionsItem(
                 context: context,
                 text: 'تسجيل الخروج',
-                callback: () {},
+                callback: () {
+                  GetStorage().erase();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ));
+                },
                 iconData: Icons.exit_to_app)
           ],
         ),

@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:teachers_app/screens/auth/splash_screen.dart';
+import 'package:teachers_app/screens/auth/welcom_screen.dart';
+import 'package:teachers_app/screens/home/all_news_screen.dart';
 import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -10,8 +16,12 @@ import 'screens/lessions/lesson_detail/attachment/pdf_preview.dart';
 
 Future<void> main() async {
   await GetStorage.init();
+  //GetStorage().erase();
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
+  if (Platform.isAndroid) {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
 
   runApp(
     DevicePreview(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,7 +5,7 @@ final userDataProvider =
     ChangeNotifierProvider<_UserDataProvider>((ref) => _UserDataProvider());
 
 class _UserDataProvider extends ChangeNotifier {
-  String token = '7ba1a288998a4ac5b339d493ff121a8856d6811b';
+  String token = 'b9046ebe4138b3eb564554d68f9ec19d546fa7ea';
   bool isStudent = true;
   String userName = 'ahmed123';
   String fullName = 'احمد فرج السكري';
