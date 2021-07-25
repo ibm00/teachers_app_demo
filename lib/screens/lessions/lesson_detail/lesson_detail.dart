@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:teachers_app/models/lessons_model.dart';
+import 'package:teachers_app/screens/lessions/lesson_detail/take_exercises.dart';
 
 import '../../../components/quiz_card.dart';
 import '../../../constants.dart';
@@ -9,11 +10,32 @@ import '../../../providers/indices_provider.dart';
 import 'attachment/attachment_widget.dart';
 import 'video/video_card.dart';
 
-class LessonDetailScreen extends StatelessWidget {
+class LessonDetailScreen extends StatefulWidget {
   final LessonModel lessonModel;
   const LessonDetailScreen({
     required this.lessonModel,
   });
+
+  @override
+  _LessonDetailScreenState createState() => _LessonDetailScreenState();
+}
+
+class _LessonDetailScreenState extends State<LessonDetailScreen> {
+  List<Map> _attachments = [];
+  List<Map> _videos = [];
+  @override
+  void initState() {
+    super.initState();
+    widget.lessonModel.contants.forEach((element) {
+      Map m = element as Map;
+      if (m['type'] == 'video') {
+        _videos.add(m);
+      } else {
+        _attachments.add(m);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -26,13 +48,17 @@ class LessonDetailScreen extends StatelessWidget {
         backgroundColor: kSecondaryColor,
         centerTitle: true,
         title: Text(
-          lessonModel.title,
+          widget.lessonModel.title,
           style: TextStyle(
             color: kPrimaryColor,
           ),
         ),
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read(lessonDetailIndex).state = 1;
+
+              Navigator.pop(context);
+            },
             icon: const Icon(
               Icons.arrow_back,
               color: kPrimaryColor,
@@ -102,27 +128,115 @@ class LessonDetailScreen extends StatelessWidget {
                 },
               ),
             ),
-            AttachmentWidget(
-              isPdf: true,
-            ),
-            AttachmentWidget(
-              isPdf: false,
-              imageUrl:
-                  'https://cf.bstatic.com/xdata/images/hotel/max1024x768/268357210.jpg?k=d9a946b1950b74dfb3278f8ec8870cf79089c2c127f424ee543eb98b2b859c62&o=&hp=1',
-            ),
-            VideoCardWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: w * 0.07, right: w * 0.07, top: h * 0.01),
-              child: QuizCardComponent(
-                isCurrent: true,
-                callback: () {},
-                examName: 'اسم الامتحان',
-                text: 'حد تانى يشير ياعم انا النت عندى مش حلو',
-                time: 'السبت , 9 مايو , 2021 الساعه 9:30 مساءا',
-                totalMark: 15,
-                studentMark: 20,
-              ),
+            Consumer(
+              builder: (context, watch, child) {
+                int x = watch(lessonDetailIndex).state;
+                if (x == 3) {
+                  return Column(
+                    children: [
+                      if (_videos.isNotEmpty)
+                        ..._videos
+                            .map((e) => VideoCardWidget(
+                                title: e['title'] as String,
+                                videoUrl: e['item'] as String))
+                            .toList(),
+                    ],
+                  );
+                } else if (x == 2) {
+                  return Column(
+                    children: [
+                      if (_attachments.isNotEmpty)
+                        ..._attachments.map((e) {
+                          return AttachmentWidget(
+                            isPdf: e['type'] == 'pdf',
+                            title: (e['title'] ?? '') as String,
+                            imageUrl: (e['item'] ?? '') as String,
+                            pdfUrl: (e['item'] ?? '') as String,
+                          );
+                        }).toList(),
+                    ],
+                  );
+                } else if (x == 1) {
+                  return Column(
+                    children: [
+                      if (_attachments.isNotEmpty)
+                        ..._attachments.map((e) {
+                          return AttachmentWidget(
+                            isPdf: e['type'] == 'pdf',
+                            title: (e['title'] ?? '') as String,
+                            imageUrl: (e['item'] ?? '') as String,
+                            pdfUrl: (e['item'] ?? '') as String,
+                          );
+                        }).toList(),
+                      if (_videos.isNotEmpty)
+                        ..._videos
+                            .map((e) => VideoCardWidget(
+                                title: e['title'] as String,
+                                videoUrl: e['item'] as String))
+                            .toList(),
+                      Column(
+                        children: widget.lessonModel.quizes
+                            .map(
+                              (e) => Padding(
+                                padding: EdgeInsets.only(
+                                    left: w * 0.07,
+                                    right: w * 0.07,
+                                    top: h * 0.01),
+                                child: QuizCardComponent(
+                                  isCurrent: true,
+                                  callback: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              TakeExerciseScreen(
+                                            examName: e.title,
+                                            questions: e.questions,
+                                          ),
+                                        ));
+                                  },
+                                  examName: e.title,
+                                  text: e.description,
+                                  time: e.time,
+                                  totalMark: 15,
+                                  studentMark: 20,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      )
+                    ],
+                  );
+                }
+                return Column(
+                  children: widget.lessonModel.quizes
+                      .map(
+                        (e) => Padding(
+                          padding: EdgeInsets.only(
+                              left: w * 0.07, right: w * 0.07, top: h * 0.01),
+                          child: QuizCardComponent(
+                            isCurrent: true,
+                            callback: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TakeExerciseScreen(
+                                      examName: e.title,
+                                      questions: e.questions,
+                                    ),
+                                  ));
+                            },
+                            examName: e.title,
+                            text: e.description,
+                            time: e.time,
+                            totalMark: 15,
+                            studentMark: 20,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                );
+              },
             ),
           ],
         ),

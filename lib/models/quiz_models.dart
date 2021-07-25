@@ -62,7 +62,7 @@ class OldQuizModel {
   final int studentMark;
   final int fullMark;
   final List<QuestionModel> questions;
-  final List answers;
+  final List<Object?> answers;
   OldQuizModel({
     required this.title,
     required this.description,

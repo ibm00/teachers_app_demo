@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
 import 'package:teachers_app/services/notification_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
 import 'screens/lessions/lesson_detail/attachment/pdf_preview.dart';
 
 Future<void> main() async {
@@ -23,8 +21,8 @@ Future<void> main() async {
   timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
   if (Platform.isAndroid) {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    await Firebase.initializeApp();
   }
-  await Firebase.initializeApp();
 
   runApp(
     DevicePreview(
@@ -52,7 +50,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => RootWidget(),
+        '/': (_) => HomeScreen(),
       },
     );
   }

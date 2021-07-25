@@ -67,7 +67,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             ),
             height: or == Orientation.portrait ? h * 0.1 : h * 0.3,
             decoration: BoxDecoration(
-                color: kPrimaryColor,
+                color: const Color(0xFF4970D7),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(25),
                   bottomRight: Radius.circular(25),

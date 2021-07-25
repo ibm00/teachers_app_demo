@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:teachers_app/api/auth_api.dart';
 import 'package:teachers_app/providers/user_data_provider.dart';
+import 'package:teachers_app/screens/lessions/lesson_home.dart';
 import 'package:teachers_app/services/qr_service.dart';
 import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
 import '../../helpers/video_helper.dart';
@@ -13,6 +14,13 @@ import 'news_part.dart';
 import 'profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  String getUserFirstName(String n) {
+    String name = '';
+    List<String> l = n.split(' ');
+    name = l.first;
+    return name.length > 10 ? name.substring(0, 9) : name;
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -32,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               builder: (context, watch, child) {
                 final provider = watch(userDataProvider);
                 return Text(
-                  provider.fullName,
+                  "مرحبا " + getUserFirstName(provider.fullName),
                   style:
                       TextStyle(fontSize: w * 0.1, fontWeight: FontWeight.w600),
                 );
@@ -41,7 +49,7 @@ class HomeScreen extends StatelessWidget {
             Text(
               'كيف يمكننا مساعدتك اليوم ؟',
               style: TextStyle(
-                fontSize: w * 0.07,
+                fontSize: w * 0.06,
                 color: Colors.grey[600],
               ),
             ),
@@ -50,23 +58,48 @@ class HomeScreen extends StatelessWidget {
             ),
             // _buildNewsPart(h, w, or),
             NewsPartScreen(),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => QuizHomeScreen()));
-              },
-              child: SvgPicture.asset(
-                'assets/images/quizes_home_screen_card.svg',
-                width: w * 0.95,
+            RepaintBoundary(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => QuizHomeScreen()));
+                },
+                child: SvgPicture.asset(
+                  'assets/images/quizes_home_screen_card.svg',
+                  width: w * 0.95,
+                ),
               ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: SvgPicture.asset(
-                'assets/images/lessons_home_screen_card.svg',
-                width: w * 0.95,
+
+            RepaintBoundary(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => LessionsHomeScreen()));
+                },
+                child: SvgPicture.asset(
+                  'assets/images/lessons_home_screen_card.svg',
+                  width: w * 0.95,
+                ),
               ),
             ),
+
+            //  Stack(
+            //   fit: StackFit.expand,
+            //   children: [
+            //     Container(
+            //       height: 200,
+            //       decoration: BoxDecoration(
+            //         color: Color(0xFF383D41),
+            //         borderRadius: BorderRadius.circular(20),
+            //       ),
+
+            //     ),
+
+            //   ],
+            // ),
           ],
         ),
       )),
@@ -110,17 +143,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {
-              Map map = VideoHelper.getValidUrlForVideo(
-                  'https://www.youtube.com/watch?v=QLcGs-eosOE&list=RDQLcGs-eosOE&start_radio=1&ab_channel=Nota-%D9%86%D9%88%D8%AA%D9%87');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => VideoPreviewScreen(
-                            url: map['url'] as String,
-                            isYouTube: map['isYouTube'] as bool,
-                          )));
-            },
+            onTap: () {},
             child: SvgPicture.asset(
               'assets/images/notification_icon.svg',
               width: w * 0.1,

@@ -24,6 +24,10 @@ class _NewsProvider extends ChangeNotifier {
   }
 
   getDataByPage(String token, int page) async {
+    if (page == 1) {
+      news.clear();
+    }
+
     Map<String, Object> data = await NewsApi.getNews(token, page);
     if (data['data'] != null) {
       addItemsToTheList(data['data'] as List<NewsModel>);

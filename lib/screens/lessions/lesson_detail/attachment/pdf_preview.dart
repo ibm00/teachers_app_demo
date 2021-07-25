@@ -4,6 +4,12 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../../../constants.dart';
 
 class PdfVeiwer extends StatelessWidget {
+  final String pdfUrl;
+  final String title;
+  const PdfVeiwer({
+    required this.pdfUrl,
+    required this.title,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +23,8 @@ class PdfVeiwer extends StatelessWidget {
           ],
           backgroundColor: kPrimaryColor,
           centerTitle: true,
-          title: Text('hhh'),
+          title: Text(title),
         ),
-        body: Container(
-            child: SfPdfViewer.network(
-                'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')));
+        body: SfPdfViewer.network(pdfUrl));
   }
 }

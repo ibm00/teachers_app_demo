@@ -2,33 +2,42 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:teachers_app/api/quiz_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/helpers/quiz.dart';
+import 'package:teachers_app/models/lessons_model.dart';
+import 'package:teachers_app/models/quiz_models.dart';
 import 'package:teachers_app/providers/loading_provider.dart';
 import 'package:teachers_app/providers/user_data_provider.dart';
 import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import 'package:teachers_app/widgets/dialogs/quiz_buttons_dialogs.dart';
 import 'package:teachers_app/widgets/radio_group.dart';
-import '../../components/qeustion.dart';
-import '../../helpers/quiz.dart';
-import '../../models/quiz_models.dart';
-import '../../widgets/dialogs/quiz_buttons_dialogs.dart';
 
-class PreviewQuiz extends StatefulWidget {
-  final List<QuestionModel> questions;
+class TakeExerciseScreen extends StatefulWidget {
+  final List<LessonQuizQuestionModel> questions;
   final String examName;
-  final List answers;
-  final Map<int, int> matcherMap;
-  PreviewQuiz(
-      {required this.questions,
-      required this.examName,
-      required this.answers,
-      required this.matcherMap});
+  TakeExerciseScreen({
+    required this.questions,
+    required this.examName,
+  });
   @override
-  _PreviewQuizState createState() => _PreviewQuizState();
+  _TakeExerciseScreenState createState() => _TakeExerciseScreenState();
 }
 
-class _PreviewQuizState extends State<PreviewQuiz> {
+class _TakeExerciseScreenState extends State<TakeExerciseScreen> {
+  List<int> correctAnswers = [];
+  List<int?> studentsAnswers = [];
   @override
   void initState() {
     super.initState();
+    studentsAnswers = List.generate(widget.questions.length, (index) => -1);
+    for (var i = 0; i < widget.questions.length; i++) {
+      for (var k = 0; k < widget.questions[i].answers.length; k++) {
+        bool isCorrect = widget.questions[i].answers[k]['correct'] as bool;
+        if (isCorrect) {
+          correctAnswers.add(k);
+        }
+      }
+    }
+    print(correctAnswers);
   }
 
   @override
@@ -91,13 +100,30 @@ class _PreviewQuizState extends State<PreviewQuiz> {
                               color: Colors.white54,
                               size: w * 0.07,
                             )),
-                        Text(
-                          'عدد الاسئلة ${widget.questions.length}',
-                          style: TextStyle(
-                            fontSize: w * 0.045,
-                            color: Colors.white54,
-                          ),
-                        ),
+                        IconButton(
+                            onPressed: () {
+                              print(studentsAnswers);
+                              int score = 0;
+                              for (var i = 0; i < studentsAnswers.length; i++) {
+                                if (studentsAnswers[i] == correctAnswers[i]) {
+                                  score++;
+                                }
+                              }
+                              print('this is score:$score');
+                              showCustomDialog(
+                                  context: context,
+                                  dialogType: DialogType.SUCCES,
+                                  title:
+                                      'النتيجة :$score/${studentsAnswers.length}',
+                                  okText: ' حسنا',
+                                  okFun: () {},
+                                  allowDissmiss: true);
+                            },
+                            icon: Icon(
+                              Icons.check,
+                              color: Colors.white54,
+                              size: w * 0.07,
+                            )),
                       ],
                     ),
                   ),
@@ -107,17 +133,28 @@ class _PreviewQuizState extends State<PreviewQuiz> {
                             bottom: 15, right: w * 0.035, left: w * 0.035)
                         : const EdgeInsets.only(bottom: 15, right: 8, left: 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.examName,
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(
-                            fontSize: w * 0.05,
-                            color: Colors.white,
+                        Expanded(
+                          child: Text(
+                            'عدد الاسئلة ${widget.questions.length}',
+                            style: TextStyle(
+                              fontSize: w * 0.045,
+                              color: Colors.white54,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Expanded(
+                          child: Text(
+                            widget.examName,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              fontSize: w * 0.05,
+                              color: Colors.white,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
@@ -140,22 +177,6 @@ class _PreviewQuizState extends State<PreviewQuiz> {
                       ),
                       itemCount: widget.questions.length,
                       itemBuilder: (context, index) {
-                        int? solvedQuestionIndex;
-                        List<int> solvedQuestionsIndeces =
-                            widget.matcherMap.keys.toList();
-                        solvedQuestionsIndeces.forEach((element) {
-                          if (index == element) {
-                            solvedQuestionIndex = element;
-                          }
-                        });
-                        if (solvedQuestionIndex != null) {
-                          int? selectedId =
-                              widget.matcherMap[solvedQuestionIndex];
-                          solvedQuestionIndex =
-                              QuizHelper.getQuestionsAnswersIds(
-                                      widget.questions[index].answers)
-                                  .indexOf(selectedId!);
-                        }
                         return Directionality(
                           textDirection: TextDirection.rtl,
                           child: Container(
@@ -177,7 +198,7 @@ class _PreviewQuizState extends State<PreviewQuiz> {
                             child: Column(
                               children: [
                                 Text(
-                                  widget.questions[index].title,
+                                  widget.questions[index].text,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize:
@@ -207,7 +228,12 @@ class _PreviewQuizState extends State<PreviewQuiz> {
                                           w > 600 || or == Orientation.landscape
                                               ? 25
                                               : 16),
-                                  defaultSelected: solvedQuestionIndex,
+                                  defaultSelected: studentsAnswers[index],
+                                  onChanged: (int? j) {
+                                    setState(() {
+                                      studentsAnswers[index] = j;
+                                    });
+                                  },
                                 ),
                               ],
                             ),

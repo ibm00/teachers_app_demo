@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/helpers/quiz.dart';
 import 'package:teachers_app/providers/quiz_provider.dart';
 import 'package:teachers_app/screens/quiz/preview_quiz.dart';
 
@@ -28,6 +29,8 @@ class OldQuizesScreen extends ConsumerWidget {
                       questions: value[index].questions,
                       answers: value[index].answers,
                       examName: value[index].title,
+                      matcherMap: QuizHelper.matchAnswersWithQuestions(
+                          value[index].answers, value[index].questions),
                     ),
                   ));
             },

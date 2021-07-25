@@ -265,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // check active or not
                                 bool isActive = _userData['active'] as bool;
                                 if (isActive == false) {
-                                  context.read(loadingProvider).state = false;
+                                  //      context.read(loadingProvider).state = false;
 
                                   showErrorDialog(context,
                                       'انت غير مسموح لك بدخول التطبيق تواصل مع المدرس لمعرفة التفاصيل');

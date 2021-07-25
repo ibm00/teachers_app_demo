@@ -210,7 +210,7 @@ class _TakeQuizScreenState extends State<TakeQuizScreen> {
                           studentAnswers: studentAnswers,
                           title: widget.questions[index].title,
                           image: widget.questions[index].image,
-                          questionAnswers: QuizHelper.getQuestionAnswers(
+                          questionAnswers: QuizHelper.getQuestionAnswersStrings(
                               widget.questions[index].answers),
                         ),
                       ),

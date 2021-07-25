@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/providers/quiz_provider.dart';
 
 import '../../../providers/indices_provider.dart';
 import 'current_quizes.dart';
@@ -34,6 +35,18 @@ class QuizHomeScreen extends StatelessWidget {
               color: const Color(0xFF5464D3),
               size: w * 0.07,
             )),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.refresh(currentQuizProvider);
+                context.refresh(oldQuizProvider);
+              },
+              icon: Icon(
+                Icons.refresh,
+                color: const Color(0xFF5464D3),
+                size: w * 0.07,
+              ))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
