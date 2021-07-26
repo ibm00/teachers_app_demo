@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -41,7 +42,8 @@ class RootWidget extends StatelessWidget {
 
                 case UserStatus.loggedStudent:
                   return HomeScreen();
-
+                case UserStatus.noInternet:
+                  return SplashScreen();
                 default:
                   return WelcomScreen();
               }
@@ -63,8 +65,16 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Center(
-        child: SvgPicture.asset('assets/images/logo.svg'),
+          child: RefreshIndicator(
+        onRefresh: () async {
+          Phoenix.rebirth(context);
+        },
+        child: Stack(
+          children: [
+            ListView(),
+            Center(child: SvgPicture.asset('assets/images/logo.svg')),
+          ],
+        ),
       )),
     );
   }

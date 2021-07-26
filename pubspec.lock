@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.4"
+  direct_link:
+    dependency: "direct main"
+    description:
+      name: direct_link
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.7"
   expansion_tile_card:
     dependency: "direct main"
     description:
@@ -214,6 +221,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_phoenix:
+    dependency: "direct main"
+    description:
+      name: flutter_phoenix
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -301,6 +315,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  internet_connection_checker:
+    dependency: "direct main"
+    description:
+      name: internet_connection_checker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+2"
   intl:
     dependency: transitive
     description:

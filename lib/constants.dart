@@ -6,6 +6,7 @@ enum UserStatus {
   loggedStudent,
   loggedFather,
   notLogged,
+  noInternet,
 }
 const Color kPrimaryColor = Color(0xFF7D8AE7);
 const Color kSecondaryColor = Color(0xFFF4F6FA);
