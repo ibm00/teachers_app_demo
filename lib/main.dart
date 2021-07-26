@@ -17,7 +17,7 @@ Future<void> main() async {
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('ar_short', timeago.ArShortMessages());
   if (Platform.isAndroid) {
-    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAGSECURE);
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
     await Firebase.initializeApp();
   }
 
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': () => HomeScreen(),
+        '/': (_) => HomeScreen(),
       },
     );
   }

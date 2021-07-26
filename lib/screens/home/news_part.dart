@@ -69,34 +69,36 @@ class _NewsPartScreenState extends State<NewsPartScreen> {
                         data: (value) {
                           return Expanded(
                             child: PageIndicatorContainer(
-                              length: value.length,
-                              indicatorSpace: 10.0,
                               key: key,
                               child: PageView(
                                 controller: controller,
                                 reverse: true,
                                 children: value
                                     .map(
-                                      (e) => Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 15,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            e.body,
-                                            textAlign: TextAlign.center,
-                                            textDirection: TextDirection.rtl,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,
-                                            style: TextStyle(
-                                                fontSize: _maxW * 0.06,
-                                                color: Colors.white),
+                                      (e) => Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              e.body,
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 3,
+                                              style: TextStyle(
+                                                  fontSize: _maxW * 0.06,
+                                                  color: Colors.white),
+                                            ),
                                           ),
-                                        ),
+                                          Text(''),
+                                        ],
                                       ),
                                     )
                                     .toList(),
                               ),
+                              length: value.length,
+                              indicatorSpace: 10.0,
                             ),
                           );
                         },
