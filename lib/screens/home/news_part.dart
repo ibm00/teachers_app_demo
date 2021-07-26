@@ -75,17 +75,24 @@ class _NewsPartScreenState extends State<NewsPartScreen> {
                                 reverse: true,
                                 children: value
                                     .map(
-                                      (e) => Center(
-                                        child: Text(
-                                          e.body,
-                                          textAlign: TextAlign.center,
-                                          textDirection: TextDirection.rtl,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                              fontSize: _maxW * 0.06,
-                                              color: Colors.white),
-                                        ),
+                                      (e) => Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              e.body,
+                                              textAlign: TextAlign.center,
+                                              textDirection: TextDirection.rtl,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 3,
+                                              style: TextStyle(
+                                                  fontSize: _maxW * 0.06,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          Text(''),
+                                        ],
                                       ),
                                     )
                                     .toList(),

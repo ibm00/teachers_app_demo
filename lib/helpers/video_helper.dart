@@ -1,36 +1,43 @@
+import 'package:direct_link/direct_link.dart';
+import 'package:teachers_app/models/video_model.dart';
+import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+
 import '../constants.dart';
 
 class VideoHelper {
-  static Map<String, dynamic> getValidUrlForVideo(String url) {
+  static Future<List<VideoModel>?> getValidUrlForVideo(String url) async {
     List<String> list = url.split('/').toList();
-    bool isYouTubeUrl = false;
-    list.forEach((e) {
-      if (e.contains("youtube.com")) {
-        isYouTubeUrl = true;
+    List<VideoModel> links = [];
+    if (url.contains('https://drive.google.com')) {
+      links.add(
+        VideoModel(
+            quality: 'there is one quality', url: getGoolgeDriveVideoUrl(list)),
+      );
+      return links;
+    }
+    try {
+      var check = await DirectLink.check(url);
+
+      check!.forEach((e) {
+        links.add(VideoModel(quality: e.quality, url: e.link));
+      });
+
+      return links;
+    } catch (e) {
+      if (url.substring(url.length - 4, url.length) == '.mp4') {
+        links.add(
+          VideoModel(quality: 'there is one quality', url: url),
+        );
+        return links;
       }
-    });
-    if (isYouTubeUrl) {
-      return {
-        'isYouTube': isYouTubeUrl,
-        'url': url,
-      };
-    } else {
-      return url.contains('https://drive.google.com')
-          ? getGoolgeDriveVideoUrl(list)
-          : {
-              'isYouTube': false,
-              'url': url,
-            };
+
+      showCustomToast('تعذر فتح الفيديو');
+      return null;
     }
   }
 
-  static Map<String, dynamic> getGoolgeDriveVideoUrl(List splitedUrl) {
+  static String getGoolgeDriveVideoUrl(List splitedUrl) {
     int index = splitedUrl.indexWhere((e) => e == 'd');
-    String newUrl =
-        'https://www.googleapis.com/drive/v3/files/${splitedUrl[index + 1]}?alt=media&key=$DRIVEAPIKEY&v=.mp4';
-    return {
-      'isYouTube': false,
-      'url': newUrl,
-    };
+    return 'https://www.googleapis.com/drive/v3/files/${splitedUrl[index + 1]}?alt=media&key=$DRIVEAPIKEY&v=.mp4';
   }
 }

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-
 import '../constants.dart';
 import '../screens/auth/after_registeration_page.dart';
 import '../services/device_info.dart';
@@ -67,7 +65,7 @@ class AuthAPI {
       http.Response response = await http.get(Uri.parse("$APP_API/api/me"),
           headers: {"Authorization": "Token $token"});
       if (response.statusCode == 200) {
-        List l = json.decode(response.body) as List;
+        List l = json.decode(utf8.decode(response.bodyBytes)) as List;
         Map userData = l[0] as Map;
         return userData;
       } else {
@@ -100,9 +98,9 @@ class AuthAPI {
         headers: <String, String>{
           "Content-Type": "application/json",
         });
-
+    final t = json.decode(res.body) as Map;
+    print(t);
     if (res.statusCode == 200 || res.statusCode == 201) {
-      final t = json.decode(res.body) as Map;
       final token = t["key"] as String;
 
       return {
@@ -110,9 +108,13 @@ class AuthAPI {
         'token': token,
       };
     } else {
+      List error1 = (t['detail'] ?? []) as List;
+      //   List error2 = t['non_field_errors'] as List;
       return {
         'sucess': false,
-        'msg': 'بيانات الطالب غير صحيحة',
+        'msg': error1.isEmpty
+            ? 'بيانات الطالب غير صحيحة'
+            : 'لا يمكن استخدام التطبيق علي اكثر من هاتف',
       };
     }
   }

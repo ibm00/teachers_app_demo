@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:teachers_app/api/auth_api.dart';
+import 'package:teachers_app/models/video_model.dart';
 import 'package:teachers_app/providers/user_data_provider.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
 import 'package:teachers_app/services/qr_service.dart';
@@ -14,6 +15,13 @@ import 'news_part.dart';
 import 'profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  String getUserFirstName(String n) {
+    String name = '';
+    List<String> l = n.split(' ');
+    name = l.first;
+    return name.length > 10 ? name.substring(0, 9) : name;
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -32,21 +40,21 @@ class HomeScreen extends StatelessWidget {
               builder: (context, watch, child) {
                 final provider = watch(userDataProvider);
                 return Text(
-                  provider.fullName,
-                  style:
-                      TextStyle(fontSize: w * 0.1, fontWeight: FontWeight.w600),
+                  'مرحبا,' + getUserFirstName(provider.fullName),
+                  style: TextStyle(
+                      fontSize: w * 0.08, fontWeight: FontWeight.w600),
                 );
               },
             ),
             Text(
               'كيف يمكننا مساعدتك اليوم ؟',
               style: TextStyle(
-                fontSize: w * 0.07,
+                fontSize: w * 0.06,
                 color: Colors.grey[600],
               ),
             ),
             SizedBox(
-              height: h * 0.02,
+              height: h * 0.01,
             ),
             NewsPartScreen(),
             GestureDetector(
@@ -130,17 +138,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {
-              Map map = VideoHelper.getValidUrlForVideo(
-                  'https://www.youtube.com/watch?v=QLcGs-eosOE&list=RDQLcGs-eosOE&start_radio=1&ab_channel=Nota-%D9%86%D9%88%D8%AA%D9%87');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => VideoPreviewScreen(
-                            url: map['url'] as String,
-                            isYouTube: map['isYouTube'] as bool,
-                          )));
-            },
+            onTap: () async {},
             child: RepaintBoundary(
               child: SvgPicture.asset(
                 'assets/images/notification_icon.svg',
