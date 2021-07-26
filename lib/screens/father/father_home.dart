@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:teachers_app/models/quiz_models.dart';
+import 'package:teachers_app/providers/quiz_provider.dart';
 
 import '../../constants.dart';
 import '../auth/login_screen.dart';
@@ -124,43 +127,68 @@ class FatherHomeScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                      child: Divider(
-                        color: Colors.black12,
-                        height: 3,
-                      ),
-                    ),
-                    itemCount: 300,
-                    itemBuilder: (context, index) {
-                      return index == 0
-                          ? Text(
-                              'الامتحانات',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: w * 0.06, color: kPrimaryColor),
-                            )
-                          : Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: ListTile(
-                                trailing: Text(
-                                  "15/${20}",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: w * 0.04),
-                                ),
-                                title: Text(
-                                  'اسم الامتحان',
-                                  style: TextStyle(fontSize: w * 0.05),
-                                ),
-                                subtitle: Text(
-                                  'ايي9 مايو , 2021 الساعه 9:30 مساءا',
-                                  style: TextStyle(fontSize: w * 0.03),
-                                ),
+                  child: Consumer(
+                    builder: (context, watch, child) {
+                      final oldQuzProvider = watch(oldQuizProvider);
+                      return oldQuzProvider.when(
+                        data: (qezList) {
+                          //qezList.insert(0, qezList[0]);
+                          print("lenth of quz list: ${qezList.length}");
+                          return ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 10,
+                              child: Divider(
+                                color: Colors.black12,
+                                height: 3,
                               ),
-                            );
+                            ),
+                            itemCount: qezList.length + 1,
+                            itemBuilder: (context, index) {
+                              final OldQuizModel currentQuz =
+                                  qezList[(index == 0) ? 0 : index - 1];
+                              return index == 0
+                                  ? Text(
+                                      'الامتحانات',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: w * 0.06,
+                                          color: kPrimaryColor),
+                                    )
+                                  : Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: ListTile(
+                                        trailing: Text(
+                                          "${currentQuz.studentMark}/${currentQuz.fullMark}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: w * 0.04),
+                                        ),
+                                        title: Text(
+                                          currentQuz.title,
+                                          style: TextStyle(fontSize: w * 0.05),
+                                        ),
+                                        subtitle: Text(
+                                          currentQuz.time,
+                                          style: TextStyle(fontSize: w * 0.03),
+                                        ),
+                                      ),
+                                    );
+                            },
+                          );
+                        },
+                        loading: () {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        },
+                        error: (error, stack) {
+                          //TO-DO....................
+                          return const Center(
+                            child: Text("حدث مشكلة حاول مرة أخرى لاحقا"),
+                          );
+                        },
+                      );
                     },
                   ),
                 ),

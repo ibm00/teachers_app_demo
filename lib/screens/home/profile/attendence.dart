@@ -36,14 +36,14 @@ class AttendanceScreen extends StatelessWidget {
         child: Card(
           color: Colors.white,
           elevation: 5,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
           ),
           child: ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(
+            separatorBuilder: (context, index) => const SizedBox(
               height: 10,
               child: Divider(
                 color: Colors.black12,
@@ -52,7 +52,7 @@ class AttendanceScreen extends StatelessWidget {
             ),
             itemCount: 300,
             itemBuilder: (context, index) {
-              bool isAttend = index.isEven;
+              final bool isAttend = index.isEven;
               return index == 0
                   ? Text(
                       'الحصص',

@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:teachers_app/screens/auth/splash_screen.dart';
+import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:teachers_app/services/notification_services.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: WelcomScreen(),
       routes: {
-        '/': (_) => RootWidget(),
+        '/': (_) => HomeScreen(),
       },
     );
   }

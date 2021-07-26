@@ -49,6 +49,8 @@ dependencies:
   internet_connection_checker: ^0.0.1+2
   flutter_phoenix: ^1.0.0
   direct_link: ^0.1.7
+  intl: ^0.17.0
+  translator: ^0.1.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
