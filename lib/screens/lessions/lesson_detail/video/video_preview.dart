@@ -1,36 +1,24 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:teachers_app/models/video_model.dart';
 import 'package:teachers_app/screens/home/home_screen.dart';
 import 'package:video_player/video_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 import '../../../../widgets/loading.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
-  final bool isYouTube;
-  final String url;
-  const VideoPreviewScreen({
-    required this.isYouTube,
-    required this.url,
-  });
+  final List<VideoModel> videos;
+  const VideoPreviewScreen({required this.videos});
   @override
   _VideoPreviewScreenState createState() => _VideoPreviewScreenState();
 }
 
 class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
-  YoutubePlayerController? _controller;
   VideoPlayerController? videoPlayerController;
   ChewieController? chewieController;
   @override
   void initState() {
     super.initState();
-    if (widget.isYouTube) {
-      _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.url)!,
-      );
-    } else {
-      videoPlayerController = VideoPlayerController.network(widget.url);
-    }
+    videoPlayerController = VideoPlayerController.network(widget.videos[0].url);
   }
 
   @override
@@ -47,35 +35,70 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
           return true;
         },
         child: SafeArea(
-          child: widget.isYouTube
-              ? Center(
-                  child: YoutubePlayer(
-                    controller: _controller!,
-                    showVideoProgressIndicator: true,
-                    progressColors: ProgressBarColors(
-                      playedColor: Colors.amber,
-                      handleColor: Colors.amberAccent,
-                    ),
-                  ),
-                )
-              : FutureBuilder(
-                  future: videoPlayerController!.initialize(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: LoadingWidgets.getNormalLoading(),
-                      );
-                    }
-                    chewieController = ChewieController(
-                      videoPlayerController: videoPlayerController!,
-                      autoPlay: true,
-                      looping: true,
-                    );
-                    return Chewie(
-                      controller: chewieController!,
-                    );
-                  },
-                ),
+          child: FutureBuilder(
+            future: videoPlayerController!.initialize(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: LoadingWidgets.getNormalLoading(),
+                );
+              }
+              chewieController = ChewieController(
+                videoPlayerController: videoPlayerController!,
+                autoPlay: true,
+                looping: true,
+                additionalOptions: (context) {
+                  return <OptionItem>[
+                    if (widget.videos.length > 1)
+                      OptionItem(
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: 200,
+                                child: Center(
+                                  child: ListView(
+                                    children: widget.videos
+                                        .map((e) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    videoPlayerController =
+                                                        VideoPlayerController
+                                                            .network(e.url);
+                                                  });
+                                                },
+                                                child: Text(
+                                                  e.quality,
+                                                  style: const TextStyle(
+                                                      fontSize: 18),
+                                                ),
+                                              ),
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                          //   setState(() {});
+                        },
+                        iconData: Icons.video_collection_outlined,
+                        title: 'video quality',
+                      ),
+                  ];
+                },
+              );
+              return Chewie(
+                controller: chewieController!,
+              );
+            },
+          ),
         ),
       ),
     );
@@ -83,12 +106,9 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
   @override
   void dispose() {
-    if (widget.isYouTube) {
-      _controller!.dispose();
-    } else {
-      videoPlayerController!.dispose();
-      chewieController!.dispose();
-    }
+    videoPlayerController!.dispose();
+    chewieController!.dispose();
+
     super.dispose();
   }
 }

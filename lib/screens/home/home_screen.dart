@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:teachers_app/api/auth_api.dart';
+import 'package:teachers_app/models/video_model.dart';
 import 'package:teachers_app/providers/user_data_provider.dart';
 import 'package:teachers_app/screens/lessions/lesson_home.dart';
 import 'package:teachers_app/services/qr_service.dart';

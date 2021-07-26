@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:teachers_app/helpers/video_helper.dart';
+import 'package:teachers_app/models/video_model.dart';
 import 'package:teachers_app/screens/lessions/lesson_detail/video/video_preview.dart';
 
 class VideoCardWidget extends StatelessWidget {
@@ -17,15 +18,18 @@ class VideoCardWidget extends StatelessWidget {
     double w = MediaQuery.of(context).size.width;
     Orientation or = MediaQuery.of(context).orientation;
     return GestureDetector(
-      onTap: () {
-        Map map = VideoHelper.getValidUrlForVideo(videoUrl);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => VideoPreviewScreen(
-                      url: map['url'] as String,
-                      isYouTube: map['isYouTube'] as bool,
-                    )));
+      onTap: () async {
+        print(videoUrl);
+        List<VideoModel>? list =
+            await VideoHelper.getValidUrlForVideo(videoUrl);
+        if (list != null) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => VideoPreviewScreen(
+                        videos: list,
+                      )));
+        }
       },
       child: Directionality(
         textDirection: TextDirection.rtl,
