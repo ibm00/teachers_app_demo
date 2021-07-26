@@ -7,24 +7,24 @@ import '../constants.dart';
 import 'user_data_provider.dart';
 
 final startAppLogicProvider = FutureProvider<UserStatus>((ref) async {
-  String? token = GetStorage().read('token');
-  bool? isStudent = GetStorage().read('isStudent');
-  String? fatherCode = GetStorage().read('father_code');
+  final String? token = GetStorage().read('token');
+  final bool? isStudent = GetStorage().read('isStudent');
+  final String? fatherCode = GetStorage().read('father_code');
 
   print('*****');
   print(token);
   print(isStudent);
   print(fatherCode);
-  bool result = await InternetConnectionChecker().hasConnection;
+  final bool result = await InternetConnectionChecker().hasConnection;
   if (result) {
     switch (isStudent) {
       case true:
-        Map? userData = await AuthAPI.getStudentDetails(token!);
+        final Map? userData = await AuthAPI.getStudentDetails(token!);
         if (userData == null) {
           // that mean error occuerd or no internet connection
           return UserStatus.notLogged;
         } else {
-          bool isActive = userData['active'] as bool;
+          final bool isActive = userData['active'] as bool;
           if (isActive) {
             ref.read(userDataProvider).token = token;
             ref.read(userDataProvider).fromMap(userData);

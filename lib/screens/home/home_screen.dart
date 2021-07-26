@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                 itemColor: const Color(0xFF4C66D5),
                 title: "الإمتحانات",
                 des: "آخر التدريبات والامتحانات\nالمضافة",
-                path: "assets/images/test.png",
+                path: "assets/images/exam.png",
               ),
             ),
             GestureDetector(
