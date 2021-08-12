@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import '../widgets/dialogs/flutter_toast.dart';
 import '../constants.dart';
 import 'dart:convert';
 

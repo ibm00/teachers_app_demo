@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import '../widgets/dialogs/flutter_toast.dart';
 
 class QrServices {
   static Future<String?>? scanQR() async {

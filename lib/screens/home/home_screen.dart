@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:teachers_app/api/auth_api.dart';
-import 'package:teachers_app/models/video_model.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
-import 'package:teachers_app/screens/lessions/lesson_home.dart';
-import 'package:teachers_app/services/qr_service.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import '../../api/auth_api.dart';
+import '../../models/video_model.dart';
+import '../../providers/news_provider.dart';
+import '../../providers/user_data_provider.dart';
+import '../lessions/lesson_home.dart';
+import '../../services/qr_service.dart';
+import '../../widgets/dialogs/flutter_toast.dart';
 import '../../helpers/video_helper.dart';
 import '../lessions/lesson_detail/video/video_preview.dart';
 import '../quiz/1-quiz_home/quiz_home.dart';
 import 'news_part.dart';
 import 'profile/profile_screen.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatelessWidget {
   String getUserFirstName(String n) {
@@ -24,9 +26,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
-    Orientation or = MediaQuery.of(context).orientation;
+    final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
+    final Orientation or = MediaQuery.of(context).orientation;
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -39,6 +41,7 @@ class HomeScreen extends StatelessWidget {
             Consumer(
               builder: (context, watch, child) {
                 final provider = watch(userDataProvider);
+
                 return Text(
                   'مرحبا,' + getUserFirstName(provider.fullName),
                   style: TextStyle(
@@ -185,14 +188,18 @@ class HomeListMember extends StatelessWidget {
             height: w * 0.377,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.only(left: 7),
                 child: Image.asset(
                   path,
-                  width: w * 0.3,
+                  width: w * 0.33,
                 ),
+              ),
+              Spacer(
+                flex: 4,
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -220,6 +227,7 @@ class HomeListMember extends StatelessWidget {
                   ],
                 ),
               ),
+              Spacer(),
             ],
           )
         ],

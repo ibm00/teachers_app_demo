@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import '../../../providers/years_provider.dart';
 import '../../../api/auth_api.dart';
 
 import '../../../helpers/validators.dart';
@@ -18,17 +21,16 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   String userName = "";
   String name = "";
-  int? year = 1;
   String phone = "";
   String dadPhone = "";
   String pass = "";
   String rePass = "";
+  int? studentYear;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passController = TextEditingController();
   bool _passVisiblity = false;
   bool _rePassVisiblity = false;
-  int? studentYear = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -109,28 +111,25 @@ class _RegisterFormState extends State<RegisterForm> {
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: Directionality(
                           textDirection: TextDirection.rtl,
-                          child: DropdownButton(
-                            isExpanded: true,
-                            value: studentYear,
-                            items: const [
-                              DropdownMenuItem(
-                                value: 1,
-                                child: Text("الصف الأول الثانوي"),
-                              ),
-                              DropdownMenuItem(
-                                value: 2,
-                                child: Text("الصف الثاني الثانوي"),
-                              ),
-                              DropdownMenuItem(
-                                value: 3,
-                                child: Text("الصف الثالث الثانوي"),
-                              ),
-                            ],
-                            onChanged: (int? v) {
-                              setState(() {
-                                studentYear = v;
-                                year = v;
-                              });
+                          child: Consumer(
+                            builder: (context, watch, child) {
+                              final yearProv = watch(yearsProvider);
+                              return DropdownButton(
+                                hint: const Text("اختار السنة"),
+                                isExpanded: true,
+                                value: studentYear,
+                                items: yearProv.years
+                                    .map((e) => DropdownMenuItem(
+                                          value: e.id,
+                                          child: Text(e.year),
+                                        ))
+                                    .toList(),
+                                onChanged: (int? v) {
+                                  setState(() {
+                                    studentYear = v;
+                                  });
+                                },
+                              );
                             },
                           ),
                         ),
@@ -279,6 +278,10 @@ class _RegisterFormState extends State<RegisterForm> {
             child: ElevatedButton(
               onPressed: () async {
                 if (!_formKey.currentState!.validate()) return;
+                if (studentYear == null) {
+                  showCustomToast("من فضلك أختار السنة الدراسية");
+                  return;
+                }
                 _formKey.currentState!.save();
                 await AuthAPI.registerMe(
                   context: context,
@@ -288,7 +291,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   password1: pass,
                   password2: rePass,
                   phoneNumber: phone,
-                  year: year,
+                  year: studentYear,
                 );
               },
               style: ButtonStyle(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:teachers_app/helpers/video_helper.dart';
-import 'package:teachers_app/models/video_model.dart';
-import 'package:teachers_app/screens/lessions/lesson_detail/video/video_preview.dart';
+import '../../../../helpers/video_helper.dart';
+import '../../../../models/video_model.dart';
+import 'video_preview.dart';
 
 class VideoCardWidget extends StatelessWidget {
   final String title;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
-import 'package:teachers_app/constants.dart';
-import 'package:teachers_app/providers/news_provider.dart';
+import '../../constants.dart';
+import '../../providers/news_provider.dart';
 
 import '../../providers/actions_provider.dart';
 import '../../providers/user_data_provider.dart';

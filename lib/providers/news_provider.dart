@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/api/news_api.dart';
-import 'package:teachers_app/models/news_model.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
+import '../api/news_api.dart';
+import '../models/news_model.dart';
+import 'user_data_provider.dart';
 import '../api/actions_api.dart';
 import '../models/actions.dart';
 

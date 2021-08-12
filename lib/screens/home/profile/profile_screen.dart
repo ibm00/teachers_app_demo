@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:teachers_app/screens/auth/login_screen.dart';
+import 'package:teachers_app/screens/home/profile/change_pass.dart';
+import '../../auth/login_screen.dart';
+import 'obout_screen.dart';
 
 import '../../../providers/user_data_provider.dart';
 import 'attendence.dart';
@@ -135,29 +137,52 @@ class ProfileScreen extends ConsumerWidget {
                 text: 'سجل الغياب',
                 callback: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AttendanceScreen(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AttendanceScreen(),
+                    ),
+                  );
                 },
                 iconData: Icons.menu_book),
             _buildOptionsItem(
                 context: context,
-                text: 'حول التطبيق',
-                callback: () {},
-                iconData: Icons.info),
+                text: 'تغيير كلمة المرور',
+                callback: () {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (_) {
+                        return ChangePass();
+                      },
+                      backgroundColor: const Color(0xFF212121));
+                },
+                iconData: Icons.lock),
             _buildOptionsItem(
                 context: context,
-                text: 'تسجيل الخروج',
+                text: 'حول التطبيق',
                 callback: () {
-                  GetStorage().erase();
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AboutScreen(),
+                    ),
+                  );
                 },
-                iconData: Icons.exit_to_app)
+                iconData: Icons.info),
+            _buildOptionsItem(
+              context: context,
+              text: 'تسجيل الخروج',
+              callback: () {
+                GetStorage().erase();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+              },
+              iconData: Icons.exit_to_app,
+            )
           ],
         ),
       )),

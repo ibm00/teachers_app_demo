@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:teachers_app/models/lessons_model.dart';
-import 'package:teachers_app/screens/lessions/lesson_detail/take_exercises.dart';
+import '../../../models/lessons_model.dart';
+import 'take_exercises.dart';
 
 import '../../../components/quiz_card.dart';
 import '../../../constants.dart';
@@ -47,10 +47,13 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
         elevation: 0,
         backgroundColor: kSecondaryColor,
         centerTitle: true,
-        title: Text(
-          widget.lessonModel.title,
-          style: TextStyle(
-            color: kPrimaryColor,
+        title: Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: Text(
+            widget.lessonModel.title,
+            style: const TextStyle(
+              color: kPrimaryColor,
+            ),
           ),
         ),
         leading: IconButton(

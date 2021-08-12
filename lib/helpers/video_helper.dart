@@ -1,6 +1,6 @@
 import 'package:direct_link/direct_link.dart';
-import 'package:teachers_app/models/video_model.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
+import '../models/video_model.dart';
+import '../widgets/dialogs/flutter_toast.dart';
 
 import '../constants.dart';
 

@@ -3,6 +3,6 @@ class Attendance {
     required this.attendance,
     required this.date,
   });
-  final String date;
+  final DateTime date;
   final bool attendance;
 }

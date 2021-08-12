@@ -1,15 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:teachers_app/api/quiz_api.dart';
+import '../../../api/quiz_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/helpers/quiz.dart';
-import 'package:teachers_app/models/lessons_model.dart';
-import 'package:teachers_app/models/quiz_models.dart';
-import 'package:teachers_app/providers/loading_provider.dart';
-import 'package:teachers_app/providers/user_data_provider.dart';
-import 'package:teachers_app/widgets/dialogs/flutter_toast.dart';
-import 'package:teachers_app/widgets/dialogs/quiz_buttons_dialogs.dart';
-import 'package:teachers_app/widgets/radio_group.dart';
+import '../../../helpers/quiz.dart';
+import '../../../models/lessons_model.dart';
+import '../../../models/quiz_models.dart';
+import '../../../providers/loading_provider.dart';
+import '../../../providers/user_data_provider.dart';
+import '../../../widgets/dialogs/flutter_toast.dart';
+import '../../../widgets/dialogs/quiz_buttons_dialogs.dart';
+import '../../../widgets/radio_group.dart';
 
 class TakeExerciseScreen extends StatefulWidget {
   final List<LessonQuizQuestionModel> questions;

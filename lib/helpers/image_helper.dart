@@ -1,4 +1,4 @@
-import 'package:teachers_app/constants.dart';
+import '../constants.dart';
 
 class ImageHelper {
   static String getValidUrl(String url) {

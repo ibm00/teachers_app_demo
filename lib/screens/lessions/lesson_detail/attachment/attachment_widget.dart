@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:teachers_app/constants.dart';
-import 'package:teachers_app/helpers/image_helper.dart';
-import 'package:teachers_app/helpers/pdf_helper.dart';
-import 'package:teachers_app/screens/lessions/lesson_detail/attachment/pdf_preview.dart';
-import 'package:teachers_app/widgets/dialogs/image_full_screen.dart';
+import '../../../../constants.dart';
+import '../../../../helpers/image_helper.dart';
+import '../../../../helpers/pdf_helper.dart';
+import 'pdf_preview.dart';
+import '../../../../widgets/dialogs/image_full_screen.dart';
 
 class AttachmentWidget extends StatelessWidget {
   final bool isPdf;

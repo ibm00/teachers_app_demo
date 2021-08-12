@@ -1,4 +1,4 @@
-import 'package:teachers_app/models/quiz_models.dart';
+import '../models/quiz_models.dart';
 
 class QuizHelper {
   static List<String> getQuestionAnswersStrings(List<dynamic> q) {

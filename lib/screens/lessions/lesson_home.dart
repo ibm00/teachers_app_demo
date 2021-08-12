@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:teachers_app/models/lessons_model.dart';
-import 'package:teachers_app/providers/lesson_provider.dart';
-import 'package:teachers_app/screens/lessions/lesson_detail/lesson_detail.dart';
-import 'package:teachers_app/widgets/loading.dart';
+import '../../models/lessons_model.dart';
+import '../../providers/lesson_provider.dart';
+import '../../providers/news_provider.dart';
+import '../../providers/quiz_provider.dart';
+import 'lesson_detail/lesson_detail.dart';
+import '../../widgets/loading.dart';
 import 'lesson_detail/lesson_detail.dart';
 import '../../constants.dart';
 
@@ -44,7 +46,10 @@ class LessionsHomeScreen extends ConsumerWidget {
       backgroundColor: kSecondaryColor,
       body: SafeArea(
           child: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          context.refresh(chaptersProvider);
+          context.refresh(newsFutureProvider);
+        },
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -109,29 +114,35 @@ class LessionsHomeScreen extends ConsumerWidget {
                                                         lessonModel: model,
                                                       )));
                                         },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            // SvgPicture.asset(
-                                            //   'assets/images/lesson_icon.svg',
-                                            //   width: w * 0.15,
-                                            //   height: w * 0.15,
-                                            //   fit: BoxFit.cover,
-                                            // ),
-                                            Text(
-                                              '${index2 + 1}-  ',
-                                              style:
-                                                  TextStyle(fontSize: w * 0.06),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                model.title,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              // SvgPicture.asset(
+                                              //   'assets/images/lesson_icon.svg',
+                                              //   width: w * 0.15,
+                                              //   height: w * 0.15,
+                                              //   fit: BoxFit.cover,
+                                              // ),
+                                              Text(
+                                                '${index2 + 1}-  ',
                                                 style: TextStyle(
-                                                    fontSize: w * 0.07),
+                                                    fontSize: w * 0.06),
                                               ),
-                                            ),
-                                          ],
+                                              Expanded(
+                                                child: Text(
+                                                  model.title,
+                                                  style: TextStyle(
+                                                      fontSize: w * 0.06),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );

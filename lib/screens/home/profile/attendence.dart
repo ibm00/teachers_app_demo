@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart' as intil;
+import '../../../models/attendance_model.dart';
+import '../../../providers/user_data_provider.dart';
+import 'package:translator/translator.dart';
 
 import '../../../constants.dart';
 
@@ -42,48 +47,60 @@ class AttendanceScreen extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
           ),
-          child: ListView.separated(
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 10,
-              child: Divider(
-                color: Colors.black12,
-                height: 3,
-              ),
-            ),
-            itemCount: 300,
-            itemBuilder: (context, index) {
-              final bool isAttend = index.isEven;
-              return index == 0
-                  ? Text(
-                      'الحصص',
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: w * 0.06, color: kPrimaryColor),
-                    )
-                  : Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: ListTile(
-                        trailing: isAttend
-                            ? Icon(
-                                Icons.check,
-                                color: kPrimaryColor,
-                                size: w * 0.06,
-                              )
-                            : Icon(
-                                Icons.close,
-                                size: w * 0.06,
-                                color: Colors.black,
-                              ),
-                        title: Text(
-                          'السبت',
-                          style: TextStyle(fontSize: w * 0.05),
-                        ),
-                        subtitle: Text(
-                          'ايي9 مايو , 2021 الساعه 9:30 مساءا',
-                          style: TextStyle(fontSize: w * 0.03),
-                        ),
-                      ),
-                    );
+          child: Consumer(
+            builder: (context, watch, child) {
+              final attendanceProvider = watch(userDataProvider);
+              final List<Attendance> attendancList =
+                  attendanceProvider.attendance;
+              return ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                  child: Divider(
+                    color: Colors.black12,
+                    height: 3,
+                  ),
+                ),
+                itemCount:
+                    attendancList.length + (attendancList.isEmpty ? 0 : 1),
+                itemBuilder: (context, index) {
+                  final Attendance currentDayAtt =
+                      attendancList[(index == 0) ? 0 : index - 1];
+                  final bool isAttend = currentDayAtt.attendance;
+                  return index == 0
+                      ? Text(
+                          'الحصص',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: w * 0.06, color: kPrimaryColor),
+                        )
+                      : Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: ListTile(
+                            trailing: isAttend
+                                ? Icon(
+                                    Icons.check,
+                                    color: kPrimaryColor,
+                                    size: w * 0.06,
+                                  )
+                                : Icon(
+                                    Icons.close,
+                                    size: w * 0.06,
+                                    color: Colors.black,
+                                  ),
+                            title: Text(
+                              intil.DateFormat.EEEE()
+                                  .format(currentDayAtt.date),
+                              style: TextStyle(fontSize: w * 0.05),
+                            ),
+                            subtitle: Text(
+                              intil.DateFormat.MMMMd()
+                                  .format(currentDayAtt.date),
+                              style: TextStyle(fontSize: w * 0.03),
+                            ),
+                          ),
+                        );
+                },
+              );
             },
           ),
         ),

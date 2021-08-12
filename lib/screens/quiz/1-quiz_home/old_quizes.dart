@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/helpers/quiz.dart';
-import 'package:teachers_app/providers/quiz_provider.dart';
-import 'package:teachers_app/screens/quiz/preview_quiz.dart';
+import '../../../helpers/quiz.dart';
+import '../../../providers/quiz_provider.dart';
+import '../preview_quiz.dart';
 
 import '../../../components/quiz_card.dart';
 

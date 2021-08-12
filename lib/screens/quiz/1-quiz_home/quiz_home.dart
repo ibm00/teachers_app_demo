@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:teachers_app/providers/quiz_provider.dart';
+import '../../../providers/news_provider.dart';
+import '../../../providers/quiz_provider.dart';
 
 import '../../../providers/indices_provider.dart';
 import 'current_quizes.dart';
@@ -40,6 +41,7 @@ class QuizHomeScreen extends StatelessWidget {
               onPressed: () {
                 context.refresh(currentQuizProvider);
                 context.refresh(oldQuizProvider);
+                context.refresh(newsFutureProvider);
               },
               icon: Icon(
                 Icons.refresh,

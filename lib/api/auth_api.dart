@@ -139,7 +139,7 @@ class AuthAPI {
           "name": name,
           "password1": password1,
           "password2": password2,
-          "year": 1,
+          "year": year,
           "phone_number": "+2$phoneNumber",
           "father_phone": "+2$fatherPhone",
           "mobile_id": "$mobileInfo/$userName",
@@ -152,8 +152,12 @@ class AuthAPI {
     print(res.statusCode);
     Map data = json.decode(res.body) as Map;
     if (res.statusCode == 200 || res.statusCode == 201) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (_) => AfterRegiseterationScreen()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const AfterRegiseterationScreen(),
+        ),
+      );
     } else if (res.statusCode >= 400 && res.statusCode < 500) {
       if (data['username'] != null) {
         showCustomToast('اسم المستخدم تم استخدامه من قبل');
@@ -162,6 +166,44 @@ class AuthAPI {
       }
     } else {
       showCustomToast('تأكد من الاتصال بالانترنت');
+    }
+  }
+
+  static Future<List> getStudyYears() async {
+    final url = Uri.parse("$APP_API/api/years/");
+    final res = await http.get(url);
+    final yearMap = json.decode(utf8.decode(res.bodyBytes)) as List;
+    return yearMap;
+  }
+
+  static Future<String> changePass(
+    String old,
+    String newPass,
+    String reNewPass,
+    String token,
+  ) async {
+    final url = Uri.parse("$APP_API/rest-auth/password/change/");
+    try {
+      final res = await http.post(url,
+          body: json.encode({
+            "old_password": old,
+            "new_password1": newPass,
+            "new_password2": reNewPass,
+          }),
+          headers: {
+            "Authorization": "Token $token",
+            "Content-Type": "application/json",
+          });
+      final data = json.decode(res.body) as Map;
+      print("change pass response : $data");
+      if (res.statusCode == 200) {
+        return "تم تغيير كلمة المرور بنجاح";
+      } else {
+        return "كلمة المرور القديمة غير صحيحة";
+      }
+    } catch (e) {
+      print("this is change pass error in catch $e");
+      return "هناك مشكلة بالأنترنت حاول لاحقا";
     }
   }
 }
