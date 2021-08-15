@@ -16,7 +16,7 @@ class AuthAPI {
             'Authorization': 'Token $token',
           },
           body: json.encode({'day': day}));
-      Map data = json.decode(utf8.decode(res.bodyBytes)) as Map;
+      final Map data = json.decode(utf8.decode(res.bodyBytes)) as Map;
       print(data);
 
       if (res.statusCode != 404) {
@@ -32,7 +32,7 @@ class AuthAPI {
 
   static Future<String?>? fatherLogin(String code) async {
     try {
-      http.Response response = await http.post(
+      final http.Response response = await http.post(
           Uri.parse(
             "$APP_API/api/father/login/",
           ),
@@ -43,8 +43,8 @@ class AuthAPI {
             'code': int.parse(code),
           }));
       if (response.statusCode == 200) {
-        Map m = json.decode(response.body) as Map;
-        String token = m['key'] as String;
+        final Map m = json.decode(response.body) as Map;
+        final String token = m['key'] as String;
         GetStorage().write('isStudent', false);
         GetStorage().write('father_code', code);
         return token;
@@ -62,11 +62,12 @@ class AuthAPI {
 
   static Future<Map?>? getStudentDetails(String token) async {
     try {
-      http.Response response = await http.get(Uri.parse("$APP_API/api/me"),
+      final http.Response response = await http.get(
+          Uri.parse("$APP_API/api/me"),
           headers: {"Authorization": "Token $token"});
       if (response.statusCode == 200) {
         List l = json.decode(utf8.decode(response.bodyBytes)) as List;
-        Map userData = l[0] as Map;
+        final Map userData = l[0] as Map;
         return userData;
       } else {
         print(
@@ -150,7 +151,7 @@ class AuthAPI {
       },
     );
     print(res.statusCode);
-    Map data = json.decode(res.body) as Map;
+    final Map data = json.decode(res.body) as Map;
     if (res.statusCode == 200 || res.statusCode == 201) {
       Navigator.push(
         context,
