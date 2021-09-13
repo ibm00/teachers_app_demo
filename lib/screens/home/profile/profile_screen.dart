@@ -58,7 +58,7 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
             Text(
-              userData.groupName,
+              'المجموعة: ${userData.groupName}',
               style: TextStyle(
                 fontSize: w * 0.05,
                 color: Colors.white.withAlpha(180),

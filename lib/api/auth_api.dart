@@ -61,6 +61,7 @@ class AuthAPI {
   }
 
   static Future<Map?>? getStudentDetails(String token) async {
+    print(token);
     try {
       final http.Response response = await http.get(
           Uri.parse("$APP_API/api/me"),

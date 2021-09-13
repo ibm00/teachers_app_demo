@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart' as intil;
+import 'package:teachers_app/providers/attendance_provider.dart';
 import '../../models/attendance_model.dart';
 import '../../models/quiz_models.dart';
 import '../../providers/quiz_provider.dart';
@@ -19,6 +20,7 @@ class FatherHomeScreen extends StatelessWidget {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     Orientation or = MediaQuery.of(context).orientation;
+    final userData = context.read(userDataProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -52,16 +54,17 @@ class FatherHomeScreen extends StatelessWidget {
                 width: w * 0.33,
               ),
               Text(
-                'عبعال السيد عبعال',
+                'حساب ولي أمر الطالب \n${userData.fullName}',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: w * 0.055, color: Colors.black),
               ),
-              Text(
-                ' sdaw123',
-                style: TextStyle(
-                  fontSize: w * 0.05,
-                  color: Colors.black.withAlpha(180),
-                ),
-              ),
+              // Text(
+              //   ' sdaw123',
+              //   style: TextStyle(
+              //     fontSize: w * 0.05,
+              //     color: Colors.black.withAlpha(180),
+              //   ),
+              // ),
               Container(
                 width: double.infinity,
                 height: or == Orientation.portrait ? h * 0.5 : h * 2,
@@ -75,58 +78,68 @@ class FatherHomeScreen extends StatelessWidget {
                   ),
                   child: Consumer(
                     builder: (context, watch, child) {
-                      final attendanceProvider = watch(userDataProvider);
-                      final List<Attendance> attendancList =
-                          attendanceProvider.attendance;
-                      return ListView.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
-                          child: Divider(
-                            color: Colors.black12,
-                            height: 3,
-                          ),
-                        ),
-                        itemCount: attendancList.length +
-                            (attendancList.isEmpty ? 0 : 1),
-                        itemBuilder: (context, index) {
-                          final Attendance currentDayAtt =
-                              attendancList[(index == 0) ? 0 : index - 1];
-                          final bool isAttend = currentDayAtt.attendance;
-                          return index == 0
-                              ? Text(
-                                  'الحصص',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: w * 0.06, color: kPrimaryColor),
-                                )
-                              : Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: ListTile(
-                                    trailing: isAttend
-                                        ? Icon(
-                                            Icons.check,
-                                            color: kPrimaryColor,
-                                            size: w * 0.06,
-                                          )
-                                        : Icon(
-                                            Icons.close,
-                                            size: w * 0.06,
-                                            color: Colors.black,
-                                          ),
-                                    title: Text(
-                                      intil.DateFormat.EEEE()
-                                          .format(currentDayAtt.date),
-                                      style: TextStyle(fontSize: w * 0.05),
-                                    ),
-                                    subtitle: Text(
-                                      intil.DateFormat.MMMMd()
-                                          .format(currentDayAtt.date),
-                                      style: TextStyle(fontSize: w * 0.03),
-                                    ),
-                                  ),
-                                );
+                      final attendanceRecord = watch(attendanceProvider);
+                      return attendanceRecord.when(
+                        data: (attendancList) {
+                          return ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 10,
+                              child: Divider(
+                                color: Colors.black12,
+                                height: 3,
+                              ),
+                            ),
+                            itemCount: attendancList.length +
+                                (attendancList.isEmpty ? 0 : 1),
+                            itemBuilder: (context, index) {
+                              final Attendance currentDayAtt =
+                                  attendancList[(index == 0) ? 0 : index - 1];
+                              final bool isAttend = currentDayAtt.attendance;
+                              return index == 0
+                                  ? Text(
+                                      'الحصص',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: w * 0.06,
+                                          color: kPrimaryColor),
+                                    )
+                                  : Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: ListTile(
+                                        trailing: isAttend
+                                            ? Icon(
+                                                Icons.check,
+                                                color: kPrimaryColor,
+                                                size: w * 0.06,
+                                              )
+                                            : Icon(
+                                                Icons.close,
+                                                size: w * 0.06,
+                                                color: Colors.black,
+                                              ),
+                                        title: Text(
+                                          intil.DateFormat.EEEE()
+                                              .format(currentDayAtt.date),
+                                          style: TextStyle(fontSize: w * 0.05),
+                                        ),
+                                        subtitle: Text(
+                                          intil.DateFormat.MMMMd()
+                                              .format(currentDayAtt.date),
+                                          style: TextStyle(fontSize: w * 0.03),
+                                        ),
+                                      ),
+                                    );
+                            },
+                          );
                         },
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                        error: (e, s) =>
+                            const Center(child: Text("Some thing went wrong.")),
                       );
+                      // final List<Attendance> attendancList =
+                      //     attendanceRecord.attendance;
                     },
                   ),
                 ),
