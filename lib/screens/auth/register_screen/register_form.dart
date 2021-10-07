@@ -25,6 +25,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String dadPhone = "";
   String pass = "";
   String rePass = "";
+  String email = "";
   int? studentYear;
 
   final _formKey = GlobalKey<FormState>();
@@ -93,6 +94,32 @@ class _RegisterFormState extends State<RegisterForm> {
                           },
                           validatorFun: (v) =>
                               ValidatorHelper.nameValidator(v!),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "البريد الإلكتروني",
+                        style: _resTextStyle14,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: MyTextFormField(
+                          myKeyboardType: TextInputType.emailAddress,
+                          textFieldIcon: const Icon(Icons.email),
+                          phoneH: _phoneHeight,
+                          mediaQuery: mediaQuery,
+                          onSaveData: (v) {
+                            email = v!;
+                          },
+                          validatorFun: (v) =>
+                              ValidatorHelper.emailValidator(v!),
                         ),
                       ),
                     ],
@@ -292,6 +319,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   password2: rePass,
                   phoneNumber: phone,
                   year: studentYear,
+                  email: email,
                 );
               },
               style: ButtonStyle(

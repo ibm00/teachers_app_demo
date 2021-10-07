@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
+
 import '../constants.dart';
 import '../screens/auth/after_registeration_page.dart';
 import '../services/device_info.dart';
@@ -10,22 +14,25 @@ import '../widgets/dialogs/flutter_toast.dart';
 class AuthAPI {
   static Future<String> confirmAttendance(String token, String day) async {
     try {
-      http.Response res = await http.post(Uri.parse('$APP_API/api/me/att/'),
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Token $token',
-          },
-          body: json.encode({'day': day}));
+      final http.Response res =
+          await http.post(Uri.parse('$APP_API/api/me/att/'),
+              headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Token $token',
+              },
+              body: json.encode({'day': day}));
       final Map data = json.decode(utf8.decode(res.bodyBytes)) as Map;
-      print(data);
 
-      if (res.statusCode != 404) {
-        return data['detail'] as String;
+      Logger().e(data);
+      Logger().e(res.statusCode);
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return data.entries.first.value as String;
       } else {
         return 'لا توجد حصة اليوم';
       }
     } catch (e) {
-      print('this is confirm attendance error : $e');
+      Logger().e(e);
+
       return 'حدث خطأ الرجاء المحاولة مرة اخري والتأكد من الانترنت';
     }
   }
@@ -124,6 +131,7 @@ class AuthAPI {
   static Future? registerMe({
     required BuildContext context,
     String? userName,
+    String? email,
     String? name,
     String? password1,
     String? password2,
@@ -145,12 +153,14 @@ class AuthAPI {
           "phone_number": "+2$phoneNumber",
           "father_phone": "+2$fatherPhone",
           "mobile_id": "$mobileInfo/$userName",
+          "email": email
         },
       ),
       headers: <String, String>{
         "Content-Type": "application/json",
       },
     );
+    // print("الريسبووونسسسسس${json.decode(res.body)}");
     print(res.statusCode);
     final Map data = json.decode(res.body) as Map;
     if (res.statusCode == 200 || res.statusCode == 201) {

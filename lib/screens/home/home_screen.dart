@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logger/logger.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../api/auth_api.dart';
 import '../../models/video_model.dart';
@@ -109,9 +110,13 @@ class HomeScreen extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               String? result = await QrServices.scanQR();
+              Logger().d(result);
               if (result != null && result != '-1') {
                 String message = await AuthAPI.confirmAttendance(
-                    context.read(userDataProvider).token, result);
+                  context.read(userDataProvider).token,
+                  result,
+                );
+
                 showCustomToast(message);
               }
             },

@@ -1,9 +1,18 @@
+// ignore_for_file: avoid_classes_with_only_static_members
+
 class ValidatorHelper {
   static String? nameValidator(String data) {
     final List names = data.split(" ");
     names.removeWhere((element) => element == "");
     if (data.trim().isEmpty) return "أدخل أسمك بالكامل";
     if (names.length < 3) return "يجب أن يكون الاسم ثلاثي على الأقل";
+  }
+
+  static String? emailValidator(String data) {
+    if (!data.contains(".com") || !data.contains("@")) {
+      return "أدخل بريد إلكتروني صحيح";
+    }
+    return null;
   }
 
   static String? userNameValidator(String data) {
