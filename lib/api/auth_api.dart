@@ -175,6 +175,7 @@ class AuthAPI {
         showCustomToast('اسم المستخدم تم استخدامه من قبل');
       } else {
         showCustomToast('تأكد من ادخال رقم هاتف صحيح');
+        print("status: ${res.statusCode} body: ${res.body}");
       }
     } else {
       showCustomToast('تأكد من الاتصال بالانترنت');
